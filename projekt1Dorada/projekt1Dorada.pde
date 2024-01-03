@@ -1,4 +1,23 @@
 import controlP5.*; // Koristimo Textfield iz biblioteke controlC5.
+import ddf.minim.*; // Koristimo biblioteku Minim za dodavanje zvuka
+
+// Dodavanje varijabli za zvuk
+Minim minim;
+AudioPlayer pozadinskaMuzika;
+//Zvukovi za prvu igru
+AudioSample dolazakNaRangListu;
+AudioSample krajIgre;
+// Zvukovi za drugu igru
+AudioSample udaracLopticeUZid;
+AudioSample udaracLopticeUPlocicu;
+
+// Funkcija koja se poziva na kraju izvodenja programa i koja zavrsava izvodenje glazbe
+void stop(){
+  pozadinskaMuzika.close();
+  minim.stop();
+  super.stop();
+}
+
 ControlP5 cp5;
 // Potrebni Textfieldovi.
 // Za prvu igru.
@@ -32,7 +51,8 @@ Loptica[] protiv;
 Loptica dohvati;
 
 //za drugu igricu
-int lopticax, lopticay, visinaLop, sirinaLop, brzinax, brzinay;
+int visinaLop, sirinaLop;
+float lopticax, lopticay, brzinax, brzinay;
 int lijevaL, lijevaV, debljina, visina, pomak;
 int desnaD, desnaV;
 boolean doleL, doleD, goreL, goreD;
@@ -104,17 +124,27 @@ void nacrtajPlocicu() {
 
 //udarac loptice u bočne strane ili gornju i donju
 void loptica() {
- if ( lopticax > width - sirinaLop/2) {
+  // bocne strane
+ if ( lopticax > width - sirinaLop/2)
+ {
     osvjeziIgre();
     brzinax = -brzinax;
     bodovi1 = bodovi1 + 1;
-  } else if ( lopticax < 0 + sirinaLop/2) {
+    udaracLopticeUZid.trigger();
+  }
+  else if ( lopticax < 0 + sirinaLop/2)
+  {
+    udaracLopticeUZid.trigger();
     osvjeziIgre();
     bodovi2 = bodovi2 + 1;
   }
-  if ( lopticay > height - visinaLop/2) {
+  // gornja i donja strana
+  if ( lopticay > height - visinaLop/2)
+  {
     brzinay = -brzinay;
-  } else if ( lopticay < 0 + visinaLop/2) {
+  }
+  else if ( lopticay < 0 + visinaLop/2)
+  {
     brzinay = -brzinay;
   }
 }
@@ -215,12 +245,14 @@ void plocicaUZid() {
 void dodir() {
   if (lopticax - sirinaLop/2 < lijevaL + debljina && lopticay - visinaLop/2 < lijevaV + visina/2 && lopticay + visinaLop/2 > lijevaV - visina/2 ) {
     if (brzinax < 0) {
-      brzinax = -brzinax*1 + 1;
+      udaracLopticeUPlocicu.trigger();
+      brzinax = -(brzinax*1.1);
     }
   }
   else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
     if (brzinax > 0) {
-      brzinax = -brzinax*1 - 1;
+      udaracLopticeUPlocicu.trigger();
+      brzinax = -(brzinax*1.1);
     }
   }
 }
@@ -242,12 +274,15 @@ void updateRangTable() {
     redak.setInt("rezultat", rezultat);  
     rang.sortReverse(1);
     plasiraoSe = true;
+    dolazakNaRangListu.trigger();
     
     saveTable(rang, "data/rang.csv");
   }
-  else {
+  else
+  {
     TableRow zadnjiRedak = rang.getRow(brojRedaka-1);
-    if (zadnjiRedak.getInt("rezultat") <= rezultat) {
+    if (zadnjiRedak.getInt("rezultat") <= rezultat)
+    {
       // Obriši zadnjeg.
       rang.removeRow(brojRedaka-1);
       // Dodaj novog.
@@ -256,11 +291,15 @@ void updateRangTable() {
       redak.setInt("rezultat", rezultat);  
       rang.sortReverse(1);
       plasiraoSe = true;
+      dolazakNaRangListu.trigger();
       saveTable(rang, "data/rang.csv");
     }
     // U protivnom, igrač se nije plasirao i ne radimo ništa.
     else
+    {
       plasiraoSe = false;
+      krajIgre.trigger();
+    }
   } 
 }
 
@@ -340,7 +379,17 @@ void setup(){
   igra1_igrac.getCaptionLabel().setText("");
   igra2_igrac1.getCaptionLabel().setText("");
   igra2_igrac2.getCaptionLabel().setText("");
-     
+  
+  // Dodavanje pozadinske glazbe
+  minim = new Minim(this);
+  pozadinskaMuzika = minim.loadFile("Zvuk/pozadinskaMuzika.mp3");
+  udaracLopticeUZid = minim.loadSample("Zvuk/udaracLopticeUZid.mp3");
+  udaracLopticeUPlocicu = minim.loadSample("Zvuk/udaracLopticeUPlocicu.wav");
+  dolazakNaRangListu = minim.loadSample("Zvuk/dolazakNaRangListu.wav");
+  krajIgre = minim.loadSample("Zvuk/krajIgre.wav");
+  // Pokreće pozadinsku muziku
+  pozadinskaMuzika.loop();
+  
   osvjeziIgre();
 }
 
@@ -628,7 +677,9 @@ void draw(){
     // Prikaži rang listu.
     textSize(30);
     if (plasiraoSe)
-      text("Bravo, " + igrac +"!\n Plasirali ste se na rang listu.", 350, 140);
+     {
+       text("Bravo, " + igrac +"!\n Plasirali ste se na rang listu.", 350, 140);
+     }
       
     textSize(50);
     text("Rang lista", 350, 350);
