@@ -43,7 +43,9 @@ PImage pozadina;
 int prozor = 0;
 
 //za prvu igricu
-int radijus=50;
+int brojZivota = 0;
+int collisionCooldown = 0;
+int radijus = 50;
 int rezultat;
 boolean igra;
 boolean kraj;
@@ -265,47 +267,6 @@ boolean prelazak (int x, int y, int width, int height){
   return false;
 }
 
-//Table stabilnoSortirajPoRezultatuPadajuce(Table tablica) {
-//  int brojRedaka = tablica.getRowCount();
-//  int[] indeksi = new int[brojRedaka];
-
-//  // Inicijalizacija indeksa
-//  for (int i = 0; i < brojRedaka; i++) {
-//    indeksi[i] = i;
-//  }
-
-//  // Bubble sort po rezultatu u padajućem poretku
-//  for (int i = 0; i < brojRedaka - 1; i++) {
-//    for (int j = 0; j < brojRedaka - i - 1; j++) {
-//      int rezultatJ = tablica.getInt(j, "rezultat");
-//      int rezultatJedanIspred = tablica.getInt(j + 1, "rezultat");
-
-//      if (rezultatJ < rezultatJedanIspred || (rezultatJ == rezultatJedanIspred && j < j + 1)) {
-//        // Zamijeni indekse
-//        int temp = indeksi[j];
-//        indeksi[j] = indeksi[j + 1];
-//        indeksi[j + 1] = temp;
-//      }
-//    }
-//  }
-
-//  // Stvori novu tablicu
-//  Table sortiranaTablica = new Table();
-//  sortiranaTablica.addColumn("igrac");
-//  sortiranaTablica.addColumn("rezultat");
-//  sortiranaTablica.addColumn("vrijeme");
-
-//  // Ažuriraj novu tablicu s sortiranim redcima
-//  for (int i = 0; i < brojRedaka; i++) {
-//    int indeks = indeksi[i];
-//    TableRow redak = tablica.getRow(indeks);
-//    sortiranaTablica.addRow(redak);
-//  }
-
-//  // Vrati sortiranu tablicu
-//  return sortiranaTablica;
-//}
-
 // Ažurira rang listu nakon završetka prve igre.
 void updateRangTable() {
   vrijemeKraja = millis();
@@ -319,8 +280,6 @@ void updateRangTable() {
     redak.setInt("rezultat", rezultat);
     redak.setInt("vrijeme", trajanjeIgre);
 
-    //rang.sort(2);  // uzlazno sortiranje po trajanju igre
-    //rang = stabilnoSortirajPoRezultatuPadajuce(rang); // stabilno silazno sortiranje po bodovima
     rang.sortReverse(1);
     
 
@@ -352,8 +311,6 @@ void updateRangTable() {
       redak.setInt("rezultat", rezultat);  
       redak.setInt("vrijeme", trajanjeIgre);
 
-      //rang.sort(2);  // uzlazno sortiranje po trajanju igre
-      //rang = stabilnoSortirajPoRezultatuPadajuce(rang); // stabilno silazno sortiranje po bodovima
       rang.sortReverse(1);
   
   
@@ -476,6 +433,7 @@ void osvjeziIgre() {
   if(prozor == 1)
   {
     rezultat = 0;
+    brojZivota = 3;
     igra = true;
     vrijemePocetka = millis();
     dohvati = napraviLopticu();
@@ -672,12 +630,24 @@ void draw(){
         ellipse(protiv[i].x, protiv[i].y, radijus, radijus);
         
         //dotakli smo plavu
-        if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < radijus )
+        if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < radijus && collisionCooldown <=0 )
         {
-          igra = false;
-          updateRangTable();          
-          prozor = 3;
-        }
+          print("brojzivota je : " + brojZivota);
+          if (brojZivota > 0){
+            //brojZivota = 3; 
+            brojZivota -= 1;
+          } 
+          if (brojZivota == 0){
+           igra = false;
+           updateRangTable();          
+           prozor = 3;
+          }
+          collisionCooldown = 60;
+         
+        }        
+      }
+      if (collisionCooldown > 0) {
+        collisionCooldown--;
       }
     
       //dotakli smo zelenu
@@ -687,6 +657,8 @@ void draw(){
         protiv[rezultat] = napraviLopticu();
         dohvati = napraviLopticu();
       }
+      
+     // dodat powerupse 
     }
   }
   
