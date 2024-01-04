@@ -33,7 +33,7 @@ String igrac2 = "Igrač 2";
 
 // Podaci potrebni za rang listu.
 Table rang;
-boolean plasiraoSe; // Je li se igrač plasirao na rang listu (top 10).
+int rangPlasiranog; // Je li se igrač plasirao na rang listu (top 10).
 
 PImage pozadina;
 
@@ -49,6 +49,7 @@ boolean igra;
 boolean kraj;
 Loptica[] protiv;
 Loptica dohvati;
+int vrijemePocetka, vrijemeKraja, trajanjeIgre;
 
 //za drugu igricu
 int visinaLop, sirinaLop;
@@ -264,16 +265,75 @@ boolean prelazak (int x, int y, int width, int height){
   return false;
 }
 
+//Table stabilnoSortirajPoRezultatuPadajuce(Table tablica) {
+//  int brojRedaka = tablica.getRowCount();
+//  int[] indeksi = new int[brojRedaka];
+
+//  // Inicijalizacija indeksa
+//  for (int i = 0; i < brojRedaka; i++) {
+//    indeksi[i] = i;
+//  }
+
+//  // Bubble sort po rezultatu u padajućem poretku
+//  for (int i = 0; i < brojRedaka - 1; i++) {
+//    for (int j = 0; j < brojRedaka - i - 1; j++) {
+//      int rezultatJ = tablica.getInt(j, "rezultat");
+//      int rezultatJedanIspred = tablica.getInt(j + 1, "rezultat");
+
+//      if (rezultatJ < rezultatJedanIspred || (rezultatJ == rezultatJedanIspred && j < j + 1)) {
+//        // Zamijeni indekse
+//        int temp = indeksi[j];
+//        indeksi[j] = indeksi[j + 1];
+//        indeksi[j + 1] = temp;
+//      }
+//    }
+//  }
+
+//  // Stvori novu tablicu
+//  Table sortiranaTablica = new Table();
+//  sortiranaTablica.addColumn("igrac");
+//  sortiranaTablica.addColumn("rezultat");
+//  sortiranaTablica.addColumn("vrijeme");
+
+//  // Ažuriraj novu tablicu s sortiranim redcima
+//  for (int i = 0; i < brojRedaka; i++) {
+//    int indeks = indeksi[i];
+//    TableRow redak = tablica.getRow(indeks);
+//    sortiranaTablica.addRow(redak);
+//  }
+
+//  // Vrati sortiranu tablicu
+//  return sortiranaTablica;
+//}
+
 // Ažurira rang listu nakon završetka prve igre.
 void updateRangTable() {
+  vrijemeKraja = millis();
+  trajanjeIgre = vrijemeKraja - vrijemePocetka;
+  print(trajanjeIgre + "\n");
   int brojRedaka = rang.getRowCount();
   // Rang tablica bi već trebala biti sortirana silazno po broju bodova.
   if (brojRedaka < 10) {
     TableRow redak = rang.addRow();
     redak.setString("igrac", igrac);
-    redak.setInt("rezultat", rezultat);  
+    redak.setInt("rezultat", rezultat);
+    redak.setInt("vrijeme", trajanjeIgre);
+
+    //rang.sort(2);  // uzlazno sortiranje po trajanju igre
+    //rang = stabilnoSortirajPoRezultatuPadajuce(rang); // stabilno silazno sortiranje po bodovima
     rang.sortReverse(1);
-    plasiraoSe = true;
+    
+
+    rangPlasiranog = 1;
+    TableRow novi_redak;
+    for (TableRow redak_temp : rang.rows())
+    {
+      if(redak_temp.getInt("rezultat") == rezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+        break;
+      rangPlasiranog += 1;
+    }
+
+    
     dolazakNaRangListu.trigger();
     
     saveTable(rang, "data/rang.csv");
@@ -281,7 +341,8 @@ void updateRangTable() {
   else
   {
     TableRow zadnjiRedak = rang.getRow(brojRedaka-1);
-    if (zadnjiRedak.getInt("rezultat") <= rezultat)
+    if (zadnjiRedak.getInt("rezultat") < rezultat
+      || (zadnjiRedak.getInt("rezultat") == rezultat && zadnjiRedak.getInt("vrijeme") > trajanjeIgre))
     {
       // Obriši zadnjeg.
       rang.removeRow(brojRedaka-1);
@@ -289,15 +350,30 @@ void updateRangTable() {
       TableRow redak = rang.addRow();
       redak.setString("igrac", igrac);
       redak.setInt("rezultat", rezultat);  
+      redak.setInt("vrijeme", trajanjeIgre);
+
+      //rang.sort(2);  // uzlazno sortiranje po trajanju igre
+      //rang = stabilnoSortirajPoRezultatuPadajuce(rang); // stabilno silazno sortiranje po bodovima
       rang.sortReverse(1);
-      plasiraoSe = true;
+  
+  
+      rangPlasiranog = 1;
+      TableRow novi_redak;
+      for (TableRow redak_temp : rang.rows())
+      {
+        if(redak_temp.getInt("rezultat") == rezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+          break;
+        rangPlasiranog += 1;
+      }
+
+      
       dolazakNaRangListu.trigger();
       saveTable(rang, "data/rang.csv");
     }
     // U protivnom, igrač se nije plasirao i ne radimo ništa.
     else
     {
-      plasiraoSe = false;
+      rangPlasiranog = -1;
       krajIgre.trigger();
     }
   } 
@@ -310,7 +386,7 @@ void prikaziRangListu(float startY) {
   
   for (TableRow row : rang.rows()) {
     fill(255, 255, 153);
-    text(i + ". " + row.getString("igrac") + " (" + row.getInt("rezultat") + " bodova)", 100, startY+(40*i));
+    text(i + ".    " + row.getString("igrac") + "    " + row.getInt("rezultat") + " bodova    " + row.getInt("vrijeme") + " milisekundi", 100, startY+(40*i));
     ++i;
   }
 }
@@ -331,10 +407,12 @@ void setup(){
     rang = new Table();
     rang.addColumn("igrac");
     rang.addColumn("rezultat");
+    rang.addColumn("vrijeme");
     
     saveTable(rang, "data/rang.csv");    
   }
   rang.setColumnType("rezultat", Table.INT);
+  rang.setColumnType("vrijeme", Table.INT);
   rang.sortReverse(1);
   
   // Font NerkoOne preuzet s GoogleFontsa.
@@ -399,6 +477,7 @@ void osvjeziIgre() {
   {
     rezultat = 0;
     igra = true;
+    vrijemePocetka = millis();
     dohvati = napraviLopticu();
     protiv = new Loptica[50];
     protiv[0] = napraviLopticu();
@@ -676,9 +755,9 @@ void draw(){
     
     // Prikaži rang listu.
     textSize(30);
-    if (plasiraoSe)
+    if (rangPlasiranog != -1 && rezultat != 0)
      {
-       text("Bravo, " + igrac +"!\n Plasirali ste se na rang listu.", 350, 140);
+       text("Bravo, " + igrac +"!\nOsvojili ste mjesto " + rangPlasiranog + " na rang listi.", 350, 140);
      }
       
     textSize(50);
