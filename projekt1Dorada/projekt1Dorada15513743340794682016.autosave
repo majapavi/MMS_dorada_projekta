@@ -44,7 +44,7 @@ int prozor = 0;
 
 //za prvu igricu
 int brojZivota = 0;
-int collisionCooldown = 0;
+int collisionCooldownPeriodInFrames = 0;
 int radijus = 50;
 int rezultat;
 boolean igra;
@@ -52,7 +52,6 @@ boolean kraj;
 Loptica[] protiv;
 Loptica dohvati;
 int vrijemePocetka, vrijemeKraja, trajanjeIgre;
-color blue = color(153, 255, 255), green = color(0, 255, 0), red = color(255, 0, 0);
 
 //za drugu igricu
 int visinaLop, sirinaLop;
@@ -69,17 +68,14 @@ int p = 0;
 //klasa koju implementiramo za loptice u prvoj igrici
 class Loptica
 {
-  int x, y, brzinax, brzinay, radius;
-  color boja;
+  int x, y, brzinax, brzinay;
   
-  Loptica (int x_, int y_, int brzinax_, int brzinay_, int radius_, color boja_)
+  Loptica (int x_, int y_, int brzinax_, int brzinay_)
   {
     x = x_;
     y = y_;
     brzinax = brzinax_;
     brzinay = brzinay_;
-    radius = radius_;
-    boja = boja_;
   }
   
   void update()
@@ -92,38 +88,13 @@ class Loptica
     if(y <= 0 || y >= width)
       brzinay = -brzinay;
   }
-  
-  void postaviNoveKoordinate() {
-    int x, y;
-    do
-    {
-      x = (int) random(width);
-      y = (int) random(height);
-    } while (dist(mouseX, mouseY, x, y) < radijus*2 + this.radius); 
-    this.x = x;
-    this.y = y;
-  }
 }
 
 //kreiranje loptice na bilo kojoj lokaciji s random brzinom
-Loptica napraviLopticuBoje(color boja)
-{
-  int x, y, brzinax, brzinay;
-  radijus += 1;
-  do
-  {
-    x = (int) random(width);
-    y = (int) random(height);
-  } while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = (int) random(5);
-  brzinay = (int) random(5);
-  return new Loptica(x, y, brzinax, brzinay, radijus, boja);
-}
-
 Loptica napraviLopticu()
 {
   int x, y, brzinax, brzinay;
-  radijus += 1;
+   
   do
   {
     x = (int) random(width);
@@ -131,13 +102,12 @@ Loptica napraviLopticu()
   } while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
   brzinax = (int) random(5);
   brzinay = (int) random(5);
-  return new Loptica(x, y, brzinax, brzinay, radijus, blue); // defaultno plava
+  return new Loptica(x, y, brzinax, brzinay);
 }
 
 //napravi lopticu na početnoj lokaciji u drugoj igrici
 void nacrtajLopticu() {
-  //fill(153, 255, 255);
-  fill(blue);
+  fill(153, 255, 255);
   ellipse(lopticax, lopticay, visinaLop, sirinaLop);
 }
 
@@ -381,6 +351,7 @@ void prikaziRangListu(float startY) {
 void setup(){
   //najprije postavljamo veličinu i pozadinu koje su uvijek iste
   size(700, 800);
+  frameRate(60);
   pozadina = loadImage("pozadina.jpg");
   pozadina.resize(700, 800);
   
@@ -466,7 +437,7 @@ void osvjeziIgre() {
     brojZivota = 3;
     igra = true;
     vrijemePocetka = millis();
-    dohvati = napraviLopticuBoje(red);
+    dohvati = napraviLopticu();
     protiv = new Loptica[50];
     protiv[0] = napraviLopticu();
   }
@@ -644,66 +615,49 @@ void draw(){
       text("Rezultat: " + rezultat, 80, 40);
       
       //crvena loptica koja je uvijek tamo gdje je miš
-      //fill(255, 0, 0);
-      //ellipse(mouseX, mouseY, radijus, radijus);
-      fill(dohvati.boja);
-      ellipse(mouseX, mouseY, dohvati.radius, dohvati.radius);
-
-      
+      fill(255, 0, 0);
+      ellipse(mouseX, mouseY, radijus, radijus);
       
       //zelena loptica koju trebamo uhvatiti
-      //fill(0, 255, 0);
-      fill(green);
-      //ellipse(dohvati.x, dohvati.y, radijus, radijus);
-      ellipse(dohvati.x, dohvati.y, dohvati.radius, dohvati.radius);
-
+      fill(0, 255, 0);
+      ellipse(dohvati.x, dohvati.y, radijus, radijus);
       dohvati.update();
     
       //plave loptice koje ne smijemo udariti
-      //fill(0, 0, 255);
+      fill(0, 0, 255);
       for(int i = 0; i<rezultat +1; i++)
       {
         protiv[i].update();
-        //ellipse(protiv[i].x, protiv[i].y, radijus, radijus);
-        fill(protiv[i].boja);
-        ellipse(protiv[i].x, protiv[i].y, protiv[i].radius, protiv[i].radius);
+        ellipse(protiv[i].x, protiv[i].y, radijus, radijus);
         
         //dotakli smo plavu
-        //if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < radijus && collisionCooldown <=0 )
-        if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < protiv[i].radius && collisionCooldown <=0 )
-
+        if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < radijus && collisionCooldownPeriodInFrames <=0 )
         {
-          //print("brojzivota je : " + brojZivota);
+          print("brojzivota je : " + brojZivota);
           if (brojZivota > 0){
-            //brojZivota = 3; 
             brojZivota -= 1;
           } 
           if (brojZivota == 0){
            igra = false;
            updateRangTable();          
            prozor = 3;
-           radijus = 50; // inace se broji od zadnje zapamcene vrijednosti
           }
-          collisionCooldown = 20;
+          collisionCooldownPeriodInFrames = 30;
          
         }        
       }
-      if (collisionCooldown > 0) {
-        collisionCooldown--;
+      if (collisionCooldownPeriodInFrames > 0) {
+        collisionCooldownPeriodInFrames--;
       }
     
       //dotakli smo zelenu
-      //if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < radijus)
-      if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < dohvati.radius)
+      if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < radijus)
       {
         rezultat++;
         protiv[rezultat] = napraviLopticu();
-        //dohvati = napraviLopticu();
-        dohvati.postaviNoveKoordinate(); // td ne mijenja velicinu zelene i crvene loptice
+        dohvati = napraviLopticu();
       }
-      
-     // dodat powerupse 
-     
+       
     }
   }
   
