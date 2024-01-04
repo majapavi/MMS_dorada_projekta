@@ -110,8 +110,8 @@ void nacrtajLopticu() {
 
 //micanje lopcite određenom brzinom
 void pomakniLopticu() {  
-  lopticax = lopticax + brzinax*2;
-  lopticay = lopticay + brzinay*2;
+  lopticax = lopticax + brzinax;
+  lopticay = lopticay + brzinay;
 }
 
 //kreiranje dvije pločice s kojima se udara loptica
@@ -246,13 +246,13 @@ void dodir() {
   if (lopticax - sirinaLop/2 < lijevaL + debljina && lopticay - visinaLop/2 < lijevaV + visina/2 && lopticay + visinaLop/2 > lijevaV - visina/2 ) {
     if (brzinax < 0) {
       udaracLopticeUPlocicu.trigger();
-      brzinax = -(brzinax*1.1);
+      brzinax = -(brzinax-0.2);
     }
   }
   else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
     if (brzinax > 0) {
       udaracLopticeUPlocicu.trigger();
-      brzinax = -(brzinax*1.1);
+      brzinax = -(brzinax+0.2);
     }
   }
 }
@@ -411,8 +411,8 @@ void osvjeziIgre() {
     lopticay = height/2;
     visinaLop = 50;
     sirinaLop = 50;
-    brzinax = 1;
-    brzinay = 1;
+    brzinax = 3;
+    brzinay = 3;
 
     debljina = 30;
     visina = 100;
