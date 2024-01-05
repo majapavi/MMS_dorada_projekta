@@ -52,7 +52,10 @@ boolean kraj;
 Loptica[] protiv;
 Loptica dohvati;
 int vrijemePocetka, vrijemeKraja, trajanjeIgre;
-color blue = color(153, 255, 255), green = color(0, 255, 0), red = color(255, 0, 0);
+color blue = color(0, 0, 255), green = color(0, 255, 0), red = color(255, 0, 0), purple = color(128,0,128);
+int powerUpCount = 0;
+Loptica[] powerUps;
+
 
 //za drugu igricu
 int visinaLop, sirinaLop;
@@ -136,7 +139,6 @@ Loptica napraviLopticu()
 
 //napravi lopticu na početnoj lokaciji u drugoj igrici
 void nacrtajLopticu() {
-  //fill(153, 255, 255);
   fill(blue);
   ellipse(lopticax, lopticay, visinaLop, sirinaLop);
 }
@@ -643,67 +645,75 @@ void draw(){
       textSize(30);
       text("Rezultat: " + rezultat, 80, 40);
       
+      fill(255, 255, 255);
+      textSize(30);
+      text("Broj zivota: " + brojZivota, width - 120, 40);
+      
       //crvena loptica koja je uvijek tamo gdje je miš
-      //fill(255, 0, 0);
-      //ellipse(mouseX, mouseY, radijus, radijus);
       fill(dohvati.boja);
       ellipse(mouseX, mouseY, dohvati.radius, dohvati.radius);
 
       
       
       //zelena loptica koju trebamo uhvatiti
-      //fill(0, 255, 0);
       fill(green);
-      //ellipse(dohvati.x, dohvati.y, radijus, radijus);
       ellipse(dohvati.x, dohvati.y, dohvati.radius, dohvati.radius);
 
       dohvati.update();
     
       //plave loptice koje ne smijemo udariti
-      //fill(0, 0, 255);
       for(int i = 0; i<rezultat +1; i++)
       {
         protiv[i].update();
-        //ellipse(protiv[i].x, protiv[i].y, radijus, radijus);
         fill(protiv[i].boja);
         ellipse(protiv[i].x, protiv[i].y, protiv[i].radius, protiv[i].radius);
         
         //dotakli smo plavu
-        //if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < radijus && collisionCooldown <=0 )
         if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < protiv[i].radius && collisionCooldown <=0 )
 
         {
-          //print("brojzivota je : " + brojZivota);
+          brojZivota -= 1;
+          print("broj zivota" + brojZivota);
           if (brojZivota > 0){
-            //brojZivota = 3; 
-            brojZivota -= 1;
-          } 
-          if (brojZivota == 0){
+            
+          } else if (brojZivota == 0){
            igra = false;
            updateRangTable();          
            prozor = 3;
            radijus = 50; // inace se broji od zadnje zapamcene vrijednosti
-          }
+          } 
           collisionCooldown = 20;
          
         }        
       }
-      if (collisionCooldown > 0) {
-        collisionCooldown--;
-      }
-    
+
       //dotakli smo zelenu
-      //if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < radijus)
       if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < dohvati.radius)
       {
         rezultat++;
         protiv[rezultat] = napraviLopticu();
-        //dohvati = napraviLopticu();
         dohvati.postaviNoveKoordinate(); // td ne mijenja velicinu zelene i crvene loptice
       }
       
      // dodat powerupse 
+     if (rezultat > 0 && rezultat % 4 == 0 && powerUpCount == 0) {
+        powerUps = new Loptica[1];
+        powerUps[0] = new Loptica().napraviLopticuBoje(purple);
+        powerUpCount += 1; 
+      //} else  if (rezultat > 0 && rezultat % 4 == 0 && powerUpCount > 0) {
+      //  powerUps[powerUpCount] = new Loptica(width/2, 0, 0, 5, purple, 10);
+      //  powerUpCount += 1; 
+      }
+     // prikazat powetupse
+     for(int i = 0; i < powerUpCount; i++){
+        fill(powerUps[i].boja);
+        ellipse(powerUps[i].x, powerUps[i].y, powerUps[i].radius, powerUps[i].radius);    
+     }
      
+     if (collisionCooldown > 0) {
+        collisionCooldown--;
+      }
+    
     }
   }
   
