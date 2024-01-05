@@ -66,9 +66,10 @@ int p = 0;
 //klasa koju implementiramo za loptice u prvoj igrici
 class Loptica
 {
-  int x, y, brzinax, brzinay;
+  int x, y;
+  float brzinax, brzinay;
   
-  Loptica (int x_, int y_, int brzinax_, int brzinay_)
+  Loptica (int x_, int y_, float brzinax_, float brzinay_)
   {
     x = x_;
     y = y_;
@@ -80,10 +81,10 @@ class Loptica
   {
     x += brzinax;
     y += brzinay;
-    if(x <= 0 || x >= width)
+    if(x <= 0 || x >= width-(radijus/2))
       brzinax = -brzinax;
       
-    if(y <= 0 || y >= width)
+    if(y <= 0 || y >= height-(radijus/2))
       brzinay = -brzinay;
   }
 }
@@ -91,15 +92,17 @@ class Loptica
 //kreiranje loptice na bilo kojoj lokaciji s random brzinom
 Loptica napraviLopticu()
 {
-  int x, y, brzinax, brzinay;
+  int x, y;
+  float brzinax, brzinay;
    
   do
   {
     x = (int) random(width);
     y = (int) random(height);
   } while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = (int) random(5);
-  brzinay = (int) random(5);
+  brzinax = random(0.8,5);
+  brzinay = random(0.8,5);
+  print(brzinax, brzinay);
   return new Loptica(x, y, brzinax, brzinay);
 }
 
@@ -394,7 +397,7 @@ void prikaziRangListu(float startY) {
 void setup(){
   //najprije postavljamo veličinu i pozadinu koje su uvijek iste
   size(700, 800);
-  pozadina = loadImage("pozadina.jpg");
+  pozadina = loadImage("svemir.jpg");
   pozadina.resize(700, 800);
   
   // Kreiraj novu instancu ControlP5-a.
