@@ -47,13 +47,18 @@ class Loptica
   void updateRadius(float r) {
     radius = r;
   }
+ 
+  void updateBrzinu(float decimPostotakX, float decimPostotakY){
+    brzinax *= decimPostotakX;
+    brzinay *= decimPostotakY;
+  }
 }
 
 //kreiranje loptice na bilo kojoj lokaciji s random brzinom
 Loptica napraviLopticuBoje(color boja)
 {
   int x, y, brzinax, brzinay;
-  radijus += 1;
+  //radijus += 1;
   do
   {
     x = (int) random(width);
@@ -68,7 +73,7 @@ Loptica napraviLopticuBoje(color boja)
 Loptica napraviLopticu()
 {
   int x, y, brzinax, brzinay;
-  radijus += 1;
+  //radijus += 1;
   do
   {
     x = (int) random(width);

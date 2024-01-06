@@ -51,6 +51,7 @@ void ispisiPravila() {
     rect(250, 650, 160, 100); 
 
     fill(0, 0, 0);
+    
     textAlign(CENTER, CENTER);
     textSize(25);
     text("NAZAD", 330, 700);

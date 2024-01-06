@@ -2,7 +2,9 @@
 int brojZivota = 0;
 int collisionCooldown = 0;
 int radijus = 50;
+int radijusPowerUp = 55;
 int rezultat;
+int dodatniBodovi = 0;
 boolean odabranaPrvaIgra;
 boolean kraj;
 Loptica[] protiv;
@@ -11,9 +13,8 @@ int vrijemePocetka, vrijemeKraja, trajanjeIgre;
 color blue = color(0, 0, 255), green = color(0, 255, 0), red = color(255, 0, 0), purple = color(128,0,128), yellow = color(255,255,0);
 int powerUpCount = 0;
 Loptica powerUp;
-int start;
-String[] pozitivniPowerUp = { "addExtraLife", "allGreen", "ExtraPoints"}; // two green, slow down blue ones
-String[] negativniPowerUp = { "bigBlue", "speedUpBlueOnes"}; // speed up blue ones, negative points, missing(out of screen) green for short period(mean), 
+String[] pozitivniPowerUp = { "addExtraLife", "allGreen", "ExtraPoints", "slowDownBlueOnes", "fewSmallBlue"}; // two green, slow down blue ones
+String[] negativniPowerUp = { "fewBigBlue", "speedUpBlueOnes"}; // speed up blue ones, negative points, missing(out of screen) green for short period(mean), 
 String dodijeljenPowerUp;
 
 void prijavaPrvaIgra() {
@@ -44,7 +45,7 @@ void prijavaPrvaIgra() {
 void prikaziPrvuIgru() {
   {
       background(pozadina);
-   
+     
       Text rez = new Text( 80, 40, 30, "Rezultat: " + rezultat, color(255, 255, 255));
       rez.ispisiText();
 
@@ -80,7 +81,9 @@ void prikaziPrvuIgru() {
            odabranaPrvaIgra = false;
            updateRangTable();          
            prozor = 3;
-           radijus = 50; // inace se broji od zadnje zapamcene vrijednosti
+           radijusPowerUp = 55;
+           
+           //radijus = 50; // inace se broji od zadnje zapamcene vrijednosti
           } 
           collisionCooldown = 20;
    
@@ -91,6 +94,7 @@ void prikaziPrvuIgru() {
       if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < dohvati.radius)
       {
         rezultat++;
+        dodatniBodovi++;
         protiv[rezultat] = napraviLopticu();
         dohvati.postaviNoveKoordinate(); // td ne mijenja velicinu zelene i crvene loptice
       }
@@ -101,6 +105,7 @@ void prikaziPrvuIgru() {
      
      if (detektiranaKolizijaPowerUp()){
        // remove powerUp, 
+       aktivirajPowerUp();
      }   
      
      
@@ -117,7 +122,7 @@ void prikaziKrajPrveIgre() {
   fill(255, 255, 153);
   textSize(60);
   textAlign(CENTER);
-  text("Osvojili ste " + rezultat + " loptica.", 350, 100);
+  text("Osvojili ste " + rezultat + " loptica.", 350, 100); // dodatibodovi
   
   // Prikaži rang listu.
   textSize(30);
