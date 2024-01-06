@@ -55,3 +55,37 @@ void ispisiPravila() {
     textSize(25);
     text("NAZAD", 330, 700);
 }
+
+
+void osvjeziIgre() {
+  //odabrana je prva igrica, 
+  if(prozor == 1)
+  {
+    rezultat = 0;
+    brojZivota = 3;
+    odabranaPrvaIgra = true;
+    vrijemePocetka = millis();
+    dohvati = napraviLopticuBoje(green);
+    protiv = new Loptica[50];
+    protiv[0] = napraviLopticu();
+  }
+  
+  //odabrana je druga igrica
+  if(prozor == 2)
+  {
+    lopticax = width/2; 
+    lopticay = height/2;
+    visinaLop = 50;
+    sirinaLop = 50;
+    brzinax = 3;
+    brzinay = 3;
+
+    debljina = 30;
+    visina = 100;
+    lijevaL = 40;
+    lijevaV = height/2;
+    desnaD = width-40-debljina;
+    desnaV = height/2;
+    pomak = 5;
+  }
+}

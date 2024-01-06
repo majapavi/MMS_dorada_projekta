@@ -42,23 +42,6 @@ PImage pozadina;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
 int prozor = 0;
 
-
-//provjeravamo je li loptica udarila o pločicu
-void dodir() {
-  if (lopticax - sirinaLop/2 < lijevaL + debljina && lopticay - visinaLop/2 < lijevaV + visina/2 && lopticay + visinaLop/2 > lijevaV - visina/2 ) {
-    if (brzinax < 0) {
-      udaracLopticeUPlocicu.trigger();
-      brzinax = -(brzinax-0.2);
-    }
-  }
-  else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
-    if (brzinax > 0) {
-      udaracLopticeUPlocicu.trigger();
-      brzinax = -(brzinax+0.2);
-    }
-  }
-}
-
 //funkcija koja provjerava jesmo li prošli preko nekog dijela prozora
 boolean prelazak (int x, int y, int width, int height){
   if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height)
@@ -145,39 +128,6 @@ void setup(){
   pozadinskaMuzika.loop();
   
   osvjeziIgre();
-}
-
-void osvjeziIgre() {
-  //odabrana je prva igrica, 
-  if(prozor == 1)
-  {
-    rezultat = 0;
-    brojZivota = 3;
-    odabranaPrvaIgra = true;
-    vrijemePocetka = millis();
-    dohvati = napraviLopticuBoje(green);
-    protiv = new Loptica[50];
-    protiv[0] = napraviLopticu();
-  }
-  
-  //odabrana je druga igrica
-  if(prozor == 2)
-  {
-    lopticax = width/2; 
-    lopticay = height/2;
-    visinaLop = 50;
-    sirinaLop = 50;
-    brzinax = 3;
-    brzinay = 3;
-
-    debljina = 30;
-    visina = 100;
-    lijevaL = 40;
-    lijevaV = height/2;
-    desnaD = width-40-debljina;
-    desnaV = height/2;
-    pomak = 5;
-  }
 }
 
 // Prilikom pritiska miša provjeravamo koji je prozor

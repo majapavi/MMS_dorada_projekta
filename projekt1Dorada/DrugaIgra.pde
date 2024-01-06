@@ -207,3 +207,19 @@ void plocicaUZid() {
     desnaV = desnaV - pomak;
   }
 }
+
+//provjeravamo je li loptica udarila o pločicu
+void dodir() {
+  if (lopticax - sirinaLop/2 < lijevaL + debljina && lopticay - visinaLop/2 < lijevaV + visina/2 && lopticay + visinaLop/2 > lijevaV - visina/2 ) {
+    if (brzinax < 0) {
+      udaracLopticeUPlocicu.trigger();
+      brzinax = -(brzinax-0.2);
+    }
+  }
+  else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
+    if (brzinax > 0) {
+      udaracLopticeUPlocicu.trigger();
+      brzinax = -(brzinax+0.2);
+    }
+  }
+}
