@@ -42,6 +42,7 @@ PImage pozadina;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
 int prozor = 0;
 
+
 //funkcija koja provjerava jesmo li prošli preko nekog dijela prozora
 boolean prelazak (int x, int y, int width, int height){
   if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height)
@@ -53,7 +54,7 @@ boolean prelazak (int x, int y, int width, int height){
 void setup(){
   //najprije postavljamo veličinu i pozadinu koje su uvijek iste
   size(700, 800);
-  pozadina = loadImage("pozadina.jpg");
+  pozadina = loadImage("svemir.jpg");
   pozadina.resize(700, 800);
   
   // Kreiraj novu instancu ControlP5-a.
