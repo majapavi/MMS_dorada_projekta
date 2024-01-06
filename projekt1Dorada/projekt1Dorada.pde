@@ -22,7 +22,7 @@ ControlP5 cp5;
 // Potrebni Textfieldovi.
 // Za prvu igru.
 Textfield igra1_igrac;
-// Za drugu igru.
+// Za drugu igru. //<>//
 Textfield igra2_igrac1, igra2_igrac2;
 
 // Imena igrač(a).
@@ -42,222 +42,6 @@ PImage pozadina;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
 int prozor = 0;
 
-//za prvu igricu
-int radijus=50;
-int rezultat;
-boolean igra;
-boolean kraj;
-Loptica[] protiv;
-Loptica dohvati;
-int vrijemePocetka, vrijemeKraja, trajanjeIgre;
-
-//za drugu igricu
-int visinaLop, sirinaLop;
-float lopticax, lopticay, brzinax, brzinay;
-int lijevaL, lijevaV, debljina, visina, pomak;
-int desnaD, desnaV;
-boolean doleL, doleD, goreL, goreD;
-color boja1 = color(255, 255, 153);
-color boja2 = color (255, 255, 255);
-int bodovi1 = 0; 
-int bodovi2 = 0;
-int p = 0;
-
-//klasa koju implementiramo za loptice u prvoj igrici
-class Loptica
-{
-  int x, y, brzinax, brzinay;
-  
-  Loptica (int x_, int y_, int brzinax_, int brzinay_)
-  {
-    x = x_;
-    y = y_;
-    brzinax = brzinax_;
-    brzinay = brzinay_;
-  }
-  
-  void update()
-  {
-    x += brzinax;
-    y += brzinay;
-    if(x <= 0 || x >= width)
-      brzinax = -brzinax;
-      
-    if(y <= 0 || y >= width)
-      brzinay = -brzinay;
-  }
-}
-
-//kreiranje loptice na bilo kojoj lokaciji s random brzinom
-Loptica napraviLopticu()
-{
-  int x, y, brzinax, brzinay;
-   
-  do
-  {
-    x = (int) random(width);
-    y = (int) random(height);
-  } while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = (int) random(5);
-  brzinay = (int) random(5);
-  return new Loptica(x, y, brzinax, brzinay);
-}
-
-//napravi lopticu na početnoj lokaciji u drugoj igrici
-void nacrtajLopticu() {
-  fill(153, 255, 255);
-  ellipse(lopticax, lopticay, visinaLop, sirinaLop);
-}
-
-//micanje lopcite određenom brzinom
-void pomakniLopticu() {  
-  lopticax = lopticax + brzinax;
-  lopticay = lopticay + brzinay;
-}
-
-//kreiranje dvije pločice s kojima se udara loptica
-void nacrtajPlocicu() {
-  fill(boja1);
-  rect(lijevaL, lijevaV, debljina, visina);
-  fill(boja2);
-  rect(desnaD, desnaV, debljina, visina);
-}
-
-//udarac loptice u bočne strane ili gornju i donju
-void loptica() {
-  // bocne strane
- if ( lopticax > width - sirinaLop/2)
- {
-    osvjeziIgre();
-    brzinax = -brzinax;
-    bodovi1 = bodovi1 + 1;
-    udaracLopticeUZid.trigger();
-  }
-  else if ( lopticax < 0 + sirinaLop/2)
-  {
-    udaracLopticeUZid.trigger();
-    osvjeziIgre();
-    bodovi2 = bodovi2 + 1;
-  }
-  // gornja i donja strana
-  if ( lopticay > height - visinaLop/2)
-  {
-    brzinay = -brzinay;
-  }
-  else if ( lopticay < 0 + visinaLop/2)
-  {
-    brzinay = -brzinay;
-  }
-}
-
-//ispisivanje rezultata
-void rezultat() {
-  textSize(30);
-  fill(boja1);
-  textAlign(LEFT);
-  text(igrac1, 20, 50);
-  text(bodovi1, 20, 80);
-  fill(boja2);
-  textAlign(RIGHT);
-  text(igrac2, width-20, 50);
-  text(bodovi2, width-20, 80);
-}
- 
-//određivanje kada smo došli do kraja igrice
-void kraj() 
-{
-  if(bodovi1 == 5) {
-    prozor = 4;
-    bodovi1=0; 
-    bodovi2=0;
-    p=1;
-  }
-  if(bodovi2 == 5) {
-    prozor = 4;
-    bodovi1=0;
-    bodovi2=0;
-    p=2;
-  }
-}
-
-void keyPressed() {
-if (key == 'w' || key == 'W') {
-    goreL = true;
-  }
-  if (key == 's' || key == 'S') {
-    doleL = true;
-  }
-  if (keyCode == UP) {
-    goreD = true;
-  }
-  if (keyCode == DOWN) {
-    doleD = true;
-  }
-}
-
-void keyReleased() {
-  if (key == 'w' || key == 'W') {
-    goreL = false;
-  }
-  if (key == 's' || key == 'S') {
-    doleL = false;
-  }
-  if (keyCode == UP) {
-    goreD = false;
-  }
-  if (keyCode == DOWN) {
-    doleD = false;
-  }
-}
-
-//pomicanje pločice gore ili dole
-void pomakniPlocicu(){
-  if (goreL) {
-    lijevaV = lijevaV - pomak;
-  }
-  if (doleL) {
-    lijevaV = lijevaV + pomak;
-  }
-  if (goreD) {
-    desnaV = desnaV - pomak;
-  }
-  if (doleD) {
-    desnaV = desnaV + pomak;
-  }
-}
-
-//gledamo je li pločica možda došla do vrha ili dna
-void plocicaUZid() {
-  if (lijevaV - visina/100 < 0) {
-    lijevaV = lijevaV + pomak;
-  }
-  if (lijevaV + visina > height) {
-    lijevaV = lijevaV - pomak;
-  }
-  if (desnaV - visina/100 < 0) {
-    desnaV = desnaV + pomak;
-  }
-  if (desnaV + visina > height) {
-    desnaV = desnaV - pomak;
-  }
-}
-
-//provjeravamo je li loptica udarila o pločicu
-void dodir() {
-  if (lopticax - sirinaLop/2 < lijevaL + debljina && lopticay - visinaLop/2 < lijevaV + visina/2 && lopticay + visinaLop/2 > lijevaV - visina/2 ) {
-    if (brzinax < 0) {
-      udaracLopticeUPlocicu.trigger();
-      brzinax = -(brzinax-0.2);
-    }
-  }
-  else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
-    if (brzinax > 0) {
-      udaracLopticeUPlocicu.trigger();
-      brzinax = -(brzinax+0.2);
-    }
-  }
-}
-
 //funkcija koja provjerava jesmo li prošli preko nekog dijela prozora
 boolean prelazak (int x, int y, int width, int height){
   if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height)
@@ -265,131 +49,6 @@ boolean prelazak (int x, int y, int width, int height){
   return false;
 }
 
-//Table stabilnoSortirajPoRezultatuPadajuce(Table tablica) {
-//  int brojRedaka = tablica.getRowCount();
-//  int[] indeksi = new int[brojRedaka];
-
-//  // Inicijalizacija indeksa
-//  for (int i = 0; i < brojRedaka; i++) {
-//    indeksi[i] = i;
-//  }
-
-//  // Bubble sort po rezultatu u padajućem poretku
-//  for (int i = 0; i < brojRedaka - 1; i++) {
-//    for (int j = 0; j < brojRedaka - i - 1; j++) {
-//      int rezultatJ = tablica.getInt(j, "rezultat");
-//      int rezultatJedanIspred = tablica.getInt(j + 1, "rezultat");
-
-//      if (rezultatJ < rezultatJedanIspred || (rezultatJ == rezultatJedanIspred && j < j + 1)) {
-//        // Zamijeni indekse
-//        int temp = indeksi[j];
-//        indeksi[j] = indeksi[j + 1];
-//        indeksi[j + 1] = temp;
-//      }
-//    }
-//  }
-
-//  // Stvori novu tablicu
-//  Table sortiranaTablica = new Table();
-//  sortiranaTablica.addColumn("igrac");
-//  sortiranaTablica.addColumn("rezultat");
-//  sortiranaTablica.addColumn("vrijeme");
-
-//  // Ažuriraj novu tablicu s sortiranim redcima
-//  for (int i = 0; i < brojRedaka; i++) {
-//    int indeks = indeksi[i];
-//    TableRow redak = tablica.getRow(indeks);
-//    sortiranaTablica.addRow(redak);
-//  }
-
-//  // Vrati sortiranu tablicu
-//  return sortiranaTablica;
-//}
-
-// Ažurira rang listu nakon završetka prve igre.
-void updateRangTable() {
-  vrijemeKraja = millis();
-  trajanjeIgre = vrijemeKraja - vrijemePocetka;
-  print(trajanjeIgre + "\n");
-  int brojRedaka = rang.getRowCount();
-  // Rang tablica bi već trebala biti sortirana silazno po broju bodova.
-  if (brojRedaka < 10) {
-    TableRow redak = rang.addRow();
-    redak.setString("igrac", igrac);
-    redak.setInt("rezultat", rezultat);
-    redak.setInt("vrijeme", trajanjeIgre);
-
-    //rang.sort(2);  // uzlazno sortiranje po trajanju igre
-    //rang = stabilnoSortirajPoRezultatuPadajuce(rang); // stabilno silazno sortiranje po bodovima
-    rang.sortReverse(1);
-    
-
-    rangPlasiranog = 1;
-    TableRow novi_redak;
-    for (TableRow redak_temp : rang.rows())
-    {
-      if(redak_temp.getInt("rezultat") == rezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
-        break;
-      rangPlasiranog += 1;
-    }
-
-    
-    dolazakNaRangListu.trigger();
-    
-    saveTable(rang, "data/rang.csv");
-  }
-  else
-  {
-    TableRow zadnjiRedak = rang.getRow(brojRedaka-1);
-    if (zadnjiRedak.getInt("rezultat") < rezultat
-      || (zadnjiRedak.getInt("rezultat") == rezultat && zadnjiRedak.getInt("vrijeme") > trajanjeIgre))
-    {
-      // Obriši zadnjeg.
-      rang.removeRow(brojRedaka-1);
-      // Dodaj novog.
-      TableRow redak = rang.addRow();
-      redak.setString("igrac", igrac);
-      redak.setInt("rezultat", rezultat);  
-      redak.setInt("vrijeme", trajanjeIgre);
-
-      //rang.sort(2);  // uzlazno sortiranje po trajanju igre
-      //rang = stabilnoSortirajPoRezultatuPadajuce(rang); // stabilno silazno sortiranje po bodovima
-      rang.sortReverse(1);
-  
-  
-      rangPlasiranog = 1;
-      TableRow novi_redak;
-      for (TableRow redak_temp : rang.rows())
-      {
-        if(redak_temp.getInt("rezultat") == rezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
-          break;
-        rangPlasiranog += 1;
-      }
-
-      
-      dolazakNaRangListu.trigger();
-      saveTable(rang, "data/rang.csv");
-    }
-    // U protivnom, igrač se nije plasirao i ne radimo ništa.
-    else
-    {
-      rangPlasiranog = -1;
-      krajIgre.trigger();
-    }
-  } 
-}
-
-void prikaziRangListu(float startY) {
-  int i = 1;
-  textSize(30);
-  textAlign(LEFT);
-  
-  for (TableRow row : rang.rows()) {
-    fill(255, 255, 153);
-    text(i + ".    " + row.getString("igrac") + "    " + row.getInt("rezultat") + " bodova    " + row.getInt("vrijeme") + " milisekundi", 100, startY+(40*i));
-    ++i;
-  }
-}
 
 void setup(){
   //najprije postavljamo veličinu i pozadinu koje su uvijek iste
@@ -469,38 +128,6 @@ void setup(){
   pozadinskaMuzika.loop();
   
   osvjeziIgre();
-}
-
-void osvjeziIgre() {
-  //odabrana je prva igrica, 
-  if(prozor == 1)
-  {
-    rezultat = 0;
-    igra = true;
-    vrijemePocetka = millis();
-    dohvati = napraviLopticu();
-    protiv = new Loptica[50];
-    protiv[0] = napraviLopticu();
-  }
-  
-  //odabrana je druga igrica
-  if(prozor == 2)
-  {
-    lopticax = width/2; 
-    lopticay = height/2;
-    visinaLop = 50;
-    sirinaLop = 50;
-    brzinax = 3;
-    brzinay = 3;
-
-    debljina = 30;
-    visina = 100;
-    lijevaL = 40;
-    lijevaV = height/2;
-    desnaD = width-40-debljina;
-    desnaV = height/2;
-    pomak = 5;
-  }
 }
 
 // Prilikom pritiska miša provjeravamo koji je prozor
@@ -584,258 +211,51 @@ void mouseClicked() {
 void draw(){
   //početni prozor
   if(prozor == 0)
-  {
-      background(pozadina);
-      
-      fill(255, 255, 153);
-      textSize(60);
-      text("Igrice s lopticom", 330, 100);
-       
-      // 1 IGRAČ
-      fill(185, 59, 59);
-      rect(150, 300, 160, 100);
-      
-      // 2 IGRAČA
-      fill(185, 59, 59);
-      rect(350, 300, 160, 100);
-      
-      // PRAVILA
-      fill(185, 59, 59);
-      rect(250, 440, 160, 100);
-      
-
-      fill(0, 0, 0);
-      textAlign(CENTER, CENTER);
-      textSize(25);
-      //tri buttona 
-      text("SKUPI LOPTICE\n(1 igrač)", 230, 350);
-      text("PONG\n(2 igrača)", 430, 350);
-      text("PRAVILA", 330, 490);
-
+  { 
+    prikaziPocetniZaslon();
   }
   
   // Upis imena za prvu igru.
   else if (prozor == 11) {
-    background(pozadina);
-    
-    igra1_igrac.setVisible(true).setFocus(true);
-    
-    fill(255, 255, 153);
-    textAlign(CENTER);
-    textSize(70);
-    text("Upišite ime:", 350, 300);
-    
-    // Gumb "Igraj!" s kojim započinje igra nakon upisa
-    // imena.
-    fill(185, 59, 59);
-    rect(270, 500, 160, 100);
-    
-    fill(0, 0, 0);
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("IGRAJ!", 350, 550);
-    
-    if (igra1_igrac.getText().length() > 20) {
-      fill(185, 59, 59);
-      textAlign(CENTER, CENTER);
-      textSize(30);
-      text("Ime smije sadržavati najviše 20 znakova!", 350, 450);
-    }
-    
+    prijavaPrvaIgra();
   }
   
   //prva igrica
   else if(prozor == 1)
   {
-    if(igra)
+    if(odabranaPrvaIgra)
     {
-      background(pozadina);
-    
-      fill(255, 255, 255);
-      textSize(30);
-      text("Rezultat: " + rezultat, 80, 40);
-      
-      //crvena loptica koja je uvijek tamo gdje je miš
-      fill(255, 0, 0);
-      ellipse(mouseX, mouseY, radijus, radijus);
-      
-      //zelena loptica koju trebamo uhvatiti
-      fill(0, 255, 0);
-      ellipse(dohvati.x, dohvati.y, radijus, radijus);
-      dohvati.update();
-    
-      //plave loptice koje ne smijemo udariti
-      fill(0, 0, 255);
-      for(int i = 0; i<rezultat +1; i++)
-      {
-        protiv[i].update();
-        ellipse(protiv[i].x, protiv[i].y, radijus, radijus);
-        
-        //dotakli smo plavu
-        if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < radijus )
-        {
-          igra = false;
-          updateRangTable();          
-          prozor = 3;
-        }
-      }
-    
-      //dotakli smo zelenu
-      if (dist(mouseX, mouseY, dohvati.x, dohvati.y) < radijus)
-      {
-        rezultat++;
-        protiv[rezultat] = napraviLopticu();
-        dohvati = napraviLopticu();
-      }
+      prikaziPrvuIgru();
     }
   }
   
   // Upis imena za drugu igru.
   else if (prozor == 21) {
-    background(pozadina);
-    
-    igra2_igrac1.setVisible(true);
-    igra2_igrac2.setVisible(true);
-    
-    fill(255, 255, 153);
-    textAlign(CENTER);
-    textSize(70);
-    text("Upišite imena:", 350, 150);
-    
-    // Gumb "Igraj!" s kojim započinje igra nakon upisa
-    // imena.
-    fill(185, 59, 59);
-    rect(270, 500, 160, 100);
-    
-    fill(0, 0, 0);
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("IGRAJ!", 350, 550);
-    
-    if (igra2_igrac1.getText().length() > 20) {
-      fill(185, 59, 59);
-      textAlign(CENTER, CENTER);
-      textSize(30);
-      text("Ime smije sadržavati najviše 20 znakova!", 350, 300);
-    }
-    
-    if (igra2_igrac2.getText().length() > 20) {
-      fill(185, 59, 59);
-      textAlign(CENTER, CENTER);
-      textSize(30);
-      text("Ime smije sadržavati najviše 20 znakova!", 350, 450);
-    }
-    
+    prijavaDrugeIgre();
   }
   
   //odabrana je druga igrica
   else if(prozor == 2)
   {
-    background(pozadina);
-    nacrtajLopticu();
-    pomakniLopticu();
-    loptica();
-    nacrtajPlocicu();
-    pomakniPlocicu();
-    plocicaUZid();
-    dodir();
-    rezultat();
-    kraj();
+    prikaziDruguIgru();
   }
   
   //prozor nakon kraja prve igrice
   else if(prozor == 3)
   {
-    background(pozadina);
-      
-    fill(255, 255, 153);
-    textSize(60);
-    textAlign(CENTER);
-    text("Osvojili ste " + rezultat + " loptica.", 350, 100);
-    
-    // Prikaži rang listu.
-    textSize(30);
-    if (rangPlasiranog != -1 && rezultat != 0)
-     {
-       text("Bravo, " + igrac +"!\nOsvojili ste mjesto " + rangPlasiranog + " na rang listi.", 350, 140);
-     }
-      
-    textSize(50);
-    text("Rang lista", 350, 350);
-    prikaziRangListu(360);
-    
-    fill(185, 59, 59);
-    rect(150, 200, 160, 100);
-     
-    fill(185, 59, 59);
-    rect(350, 200, 160, 100);
-      
-
-    fill(0, 0, 0);
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("IGRAJ \nPONOVO", 430, 250);
-    text("POČETNI \nIZBORNIK", 230, 250);
+    prikaziKrajPrveIgre();
 
   }  
   
   //prozor nakon kraja druge igrice
   else if(prozor == 4)
   {
-    background(pozadina);
-      
-    fill(255, 255, 153);
-    textSize(60);
-    textAlign(CENTER);
-    text("Kraj igre!", 350, 100);
-    text("Pobijedio je igrač", 350, 170);
-    if (p == 1)
-      text(igrac1, 350, 240);
-    else if (p == 2)
-      text(igrac2, 350, 240);
-    
-    fill(185, 59, 59);
-    rect(150, 300, 160, 100);
-     
-    fill(185, 59, 59);
-    rect(350, 300, 160, 100);
-      
-
-    fill(0, 0, 0);
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("IGRAJ \nPONOVO", 430, 350);
-    text("POČETNI \nIZBORNIK", 230, 350);
+    prikaziKrajDrugeIgre();
   }
   
   //pravila
   else if(prozor == 5)
   {
-    background(pozadina);
-      
-    fill(boja1);
-    textSize(40);
-    textAlign(CENTER);
-    text("Skupi loptice (1 igrač)", 350, 70);
-    textSize(30);
-    fill(boja2);
-    text("U ovoj igrici, vi ste crvena loptica. \nPomičući miša, mičete svoju lopticu. \nCilj je tom lopticom dotaknuti što više zelenih. \nSa svakom dotaknutom zelenom lopticom, \nbroj plavih se povećava.\nIgra je gotova kada dotaknete plavu lopticu", 350, 120);
-   
-    fill(boja1);
-    textSize(40);
-    textAlign(CENTER);
-    text("Pong (2 igrača)", 350, 420);
-    textSize(30);
-    fill(boja2);
-    text("Cilj ove igrice je poslati protivniku \nlopticu tako da je on ne može vratiti. \nPobjednik je onaj igrač kojem to 5 puta \npođe za rukom.", 350, 470);
- 
-    fill(185, 59, 59);
-    rect(250, 650, 160, 100); 
-
-    fill(0, 0, 0);
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("NAZAD", 330, 700);
-    
+    ispisiPravila(); 
   }
 }
