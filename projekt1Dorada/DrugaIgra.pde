@@ -24,13 +24,9 @@ void prijavaDrugeIgre() {
   
   // Gumb "Igraj!" s kojim započinje igra nakon upisa
   // imena.
-  fill(185, 59, 59);
-  rect(270, 500, 160, 100);
-  
-  fill(0, 0, 0);
-  textAlign(CENTER, CENTER);
-  textSize(25);
-  text("IGRAJ!", 350, 550);
+
+  Gumb igraj = new Gumb(270, 500, 160, 100, 25,  "IGRAJ!", color(185, 59, 59));
+  igraj.nacrtajGumb();
   
   if (igra2_igrac1.getText().length() > 20) {
     fill(185, 59, 59);

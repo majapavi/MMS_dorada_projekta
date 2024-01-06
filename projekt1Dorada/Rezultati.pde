@@ -3,13 +3,16 @@
 void updateRangTable() {
   vrijemeKraja = millis();
   trajanjeIgre = vrijemeKraja - vrijemePocetka;
-  print(trajanjeIgre + "\n");
+  //print(trajanjeIgre + "\n");
+  int ukupniRezultat = rezultat + dodatniBodovi;
+    
   int brojRedaka = rang.getRowCount();
   // Rang tablica bi već trebala biti sortirana silazno po broju bodova.
   if (brojRedaka < 10) {
+    
     TableRow redak = rang.addRow();
     redak.setString("igrac", igrac);
-    redak.setInt("rezultat", rezultat);
+    redak.setInt("rezultat", ukupniRezultat);
     redak.setInt("vrijeme", trajanjeIgre);
 
     rang.sortReverse(1);
@@ -19,7 +22,7 @@ void updateRangTable() {
     TableRow novi_redak;
     for (TableRow redak_temp : rang.rows())
     {
-      if(redak_temp.getInt("rezultat") == rezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+      if(redak_temp.getInt("rezultat") == ukupniRezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
         break;
       rangPlasiranog += 1;
     }
@@ -32,15 +35,15 @@ void updateRangTable() {
   else
   {
     TableRow zadnjiRedak = rang.getRow(brojRedaka-1);
-    if (zadnjiRedak.getInt("rezultat") < rezultat
-      || (zadnjiRedak.getInt("rezultat") == rezultat && zadnjiRedak.getInt("vrijeme") > trajanjeIgre))
+    if (zadnjiRedak.getInt("rezultat") < ukupniRezultat
+      || (zadnjiRedak.getInt("rezultat") == ukupniRezultat && zadnjiRedak.getInt("vrijeme") > trajanjeIgre))
     {
       // Obriši zadnjeg.
       rang.removeRow(brojRedaka-1);
       // Dodaj novog.
       TableRow redak = rang.addRow();
       redak.setString("igrac", igrac);
-      redak.setInt("rezultat", rezultat);  
+      redak.setInt("rezultat", ukupniRezultat);  
       redak.setInt("vrijeme", trajanjeIgre);
 
       rang.sortReverse(1);
@@ -50,7 +53,7 @@ void updateRangTable() {
       TableRow novi_redak;
       for (TableRow redak_temp : rang.rows())
       {
-        if(redak_temp.getInt("rezultat") == rezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+        if(redak_temp.getInt("rezultat") == ukupniRezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
           break;
         rangPlasiranog += 1;
       }

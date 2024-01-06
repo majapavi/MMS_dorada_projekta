@@ -5,7 +5,7 @@ class Loptica
   float x, y, brzinax, brzinay, radius;
   color boja;
 
-  Loptica (int x_, int y_, int brzinax_, int brzinay_, int radius_, color boja_)
+  Loptica (float x_, float y_, float brzinax_, float brzinay_, float radius_, color boja_)
   {
     x = x_;
     y = y_;
@@ -24,6 +24,10 @@ class Loptica
 
     if (y <= 0 || y >= width)
       brzinay = -brzinay;
+  }
+  
+  void promijeniBojuU(color novaBoja) {
+    boja = novaBoja;
   }
 
   void postaviNoveKoordinate() {
@@ -45,12 +49,16 @@ class Loptica
   }
   
   void updateRadius(float r) {
-    radius = r;
+    if ( r >= 20 || r <= 150 ) {
+      radius = r;
+    }
   }
  
   void updateBrzinu(float decimPostotakX, float decimPostotakY){
-    brzinax *= decimPostotakX;
-    brzinay *= decimPostotakY;
+    if (brzinax <= 5 && brzinay <= 5 && brzinax >= 1 && brzinay >=1){
+      brzinax *= decimPostotakX;
+      brzinay *= decimPostotakY;
+    }
   }
 }
 
