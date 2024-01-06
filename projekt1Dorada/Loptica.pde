@@ -19,10 +19,10 @@ class Loptica
   {
     x += brzinax;
     y += brzinay;
-    if (x <= 0 || x >= width)
+    if (x <= (radius/2) || x >= width-(radius/2))
       brzinax = -brzinax;
 
-    if (y <= 0 || y >= width)
+    if (y <= (radius/2) || y >= width-(radius/2))
       brzinay = -brzinay;
   }
   
@@ -80,16 +80,16 @@ Loptica napraviLopticuBoje(color boja)
 
 Loptica napraviLopticu()
 {
-  int x, y, brzinax, brzinay;
+  float x, y, brzinax, brzinay;
   //radijus += 1;
   do
   {
-    x = (int) random(width);
-    y = (int) random(height);
+    x = random((radijus/2), width-(radijus/2) );
+    y = random((radijus/2), height-(radijus/2) );
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = (int) random(5);
-  brzinay = (int) random(5);
+  brzinax = random(0.6,5);
+  brzinay = random(0.6,5);
   return new Loptica(x, y, brzinax, brzinay, radijus, blue); // defaultno plava
 }
 
