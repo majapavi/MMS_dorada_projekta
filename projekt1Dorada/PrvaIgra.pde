@@ -22,6 +22,8 @@ boolean allGreen = false;
 int trenutniAllGreen;
 int pocetnoVrijemePrijePU;
 int trenutnoVrijemeDoPU;
+int startShake = 0;
+int trenutniShake = 0;
 
 String deklinacija(int ukupniRezultat) {
   String bodova = " bodova";
@@ -91,7 +93,6 @@ void prikaziPrvuIgru() {
       if (dist(mouseX, mouseY, protiv[i].x, protiv[i].y) < protiv[i].radius-2 && collisionCooldown <=0 )
       {
         if (allGreen) {
-          //print("allgreen");
           trenutniAllGreen = millis();
           promijeniUBoju(green);
           if(collisionCooldownAllGreen <= 0){
@@ -104,7 +105,8 @@ void prikaziPrvuIgru() {
             }
           }
         } else {
-          delay(500);
+          startShake = millis();
+          //delay(500); // freeze
           brojZivota -= 1;
           if (brojZivota > 0) {
             protiv[i].postaviNoveKoordinate(); // dotaknutu plavu lopticu udaljimo od crvene
@@ -179,8 +181,7 @@ void prikaziKrajPrveIgre() {
 void crtajLoptice() { // crtanje loptica odvojeno od detekcije kolizije s lopticama
 
   //crvena loptica koja je uvijek tamo gdje je miš
-  fill(red);
-  ellipse(mouseX, mouseY, dohvati.radius, dohvati.radius);
+  dohvati.shakeIfActive();
 
   //zelena loptica koju trebamo uhvatiti
   fill(dohvati.boja);

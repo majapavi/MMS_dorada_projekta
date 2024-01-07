@@ -57,7 +57,6 @@ void dodajPowerUp() {
 }
 
 boolean vrijeme() {
-  //print(trenutnoVrijemeDoPU - pocetnoVrijemePrijePU + "\n");
   return (trenutnoVrijemeDoPU - pocetnoVrijemePrijePU >= 4500); // namjestit koliko svakih sekundi zelimo da dode novi powerUPs
 }
 
