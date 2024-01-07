@@ -60,6 +60,20 @@ class Loptica
       brzinay *= decimPostotakY;
     }
   }
+  
+    void shakeIfActive() {
+    trenutniShake = millis();
+    if (trenutniShake - startShake <= 1000) {
+      trenutniShake = millis();
+      fill(red);
+      ellipse(mouseX + random(-10, 10), mouseY + random(-10, 10), dohvati.radius, dohvati.radius);
+    } else {
+      
+     fill(red);
+     ellipse(mouseX, mouseY, dohvati.radius, dohvati.radius);
+   }
+  }
+  
 }
 
 //kreiranje loptice na bilo kojoj lokaciji s random brzinom
