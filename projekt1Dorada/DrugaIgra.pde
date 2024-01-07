@@ -4,8 +4,6 @@ float lopticax, lopticay, brzinax, brzinay;
 int lijevaL, lijevaV, debljina, visina, pomak;
 int desnaD, desnaV;
 boolean doleL, doleD, goreL, goreD;
-color boja1 = color(255, 255, 153);
-color boja2 = color (255, 255, 255);
 int bodovi1 = 0; 
 int bodovi2 = 0;
 int p = 0;
@@ -17,29 +15,21 @@ void prijavaDrugeIgre() {
   igra2_igrac1.setVisible(true);
   igra2_igrac2.setVisible(true);
   
-  fill(255, 255, 153);
-  textAlign(CENTER);
-  textSize(70);
-  text("Upišite imena:", 350, 150);
+  Text ime = new Text (350, 150, 70, "Upišite imena:", zuta);
+  ime.ispisiText();
   
-  // Gumb "Igraj!" s kojim započinje igra nakon upisa
-  // imena.
-
-  Gumb igraj = new Gumb(270, 500, 160, 100, 25,  "IGRAJ!", color(185, 59, 59));
+  // Gumb "Igraj!" s kojim započinje igra nakon upisa imena.
   igraj.nacrtajGumb();
+  nazad.nacrtajGumb();
   
   if (igra2_igrac1.getText().length() > 20) {
-    fill(185, 59, 59);
-    textAlign(CENTER, CENTER);
-    textSize(30);
-    text("Ime smije sadržavati najviše 20 znakova!", 350, 300);
+    Text duljinaUsername = new Text(350, 300, "Ime smije sadržavati najviše 20 znakova!");
+    duljinaUsername.ispisiText();
   }
   
   if (igra2_igrac2.getText().length() > 20) {
-    fill(185, 59, 59);
-    textAlign(CENTER, CENTER);
-    textSize(30);
-    text("Ime smije sadržavati najviše 20 znakova!", 350, 450);
+    Text duljinaUsername = new Text(350, 450, "Ime smije sadržavati najviše 20 znakova!");
+    duljinaUsername.ispisiText();
   }
 }
 
@@ -54,34 +44,25 @@ void prikaziDruguIgru() {
   dodir();
   ispisiRezultat();
   provjeriKraj();
-  }
+}
 
 void prikaziKrajDrugeIgre() {
     background(pozadina);
-      
-    fill(255, 255, 153);
-    textSize(60);
-    textAlign(CENTER);
-    text("Kraj igre!", 350, 100);
-    text("Pobijedio je igrač", 350, 170);
-    if (p == 1)
-      text(igrac1, 350, 240);
-    else if (p == 2)
-      text(igrac2, 350, 240);
+    
+    // Proglašenje pobjednika
+    String pobjedio = "Kraj igre!\nPobijedio je igrač\n";
+    pobjedio = (p == 1) ? pobjedio+igrac1 : pobjedio+igrac2;
+    Text pobjednik = new Text(350, 200, 70, pobjedio, zuta);
+    pobjednik.ispisiText();
     
     //gumbovi
-    fill(185, 59, 59);
-    rect(150, 300, 160, 100);
-     
-    fill(185, 59, 59);
-    rect(350, 300, 160, 100);
-      
-    fill(0, 0, 0);
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("IGRAJ \nPONOVO", 430, 350);
-    text("POČETNI \nIZBORNIK", 230, 350);
+    Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
+    ponovno.nacrtajGumb();
+    
+    Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
+    izbornik.nacrtajGumb();
 }
+
 /// provjera kraja
 
 //određivanje kada smo došli do kraja igrice
@@ -101,14 +82,25 @@ void provjeriKraj()
   }
 }
 
+//napravi lopticu na početnoj lokaciji u drugoj igrici
+void nacrtajLopticu() {
+  fill(blue);
+  ellipse(lopticax, lopticay, visinaLop, sirinaLop);
+}
+
+//micanje loptice određenom brzinom
+void pomakniLopticu() {
+  lopticax = lopticax + brzinax;
+  lopticay = lopticay + brzinay;
+}
 
 /// detekcija pokreta, kreiranje plocica
 
 //kreiranje dvije pločice s kojima se udara loptica
 void nacrtajPlocicu() {
-  fill(boja1);
+  fill(zuta);
   rect(lijevaL, lijevaV, debljina, visina);
-  fill(boja2);
+  fill(bijela);
   rect(desnaD, desnaV, debljina, visina);
 }
 

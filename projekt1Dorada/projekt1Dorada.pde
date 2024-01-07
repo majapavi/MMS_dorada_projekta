@@ -26,7 +26,8 @@ Textfield igra1_igrac;
 Textfield igra2_igrac1, igra2_igrac2;
 
 // Imena igrač(a).
-String igrac = "Igrač";  // Za prvu igru.
+// Za prvu igru.
+String igrac = "Igrač";  
 // Za drugu igru.
 String igrac1 = "Igrač 1";
 String igrac2 = "Igrač 2";
@@ -62,7 +63,7 @@ void setup(){
   
   // Tablica za rang listu.
   rang = loadTable("data/rang.csv", "header");
-  // Tablica još ne postoji, treba je stvoriti.
+  // Ako tablica još ne postoji, treba je stvoriti.
   if (rang == null) {
     rang = new Table();
     rang.addColumn("igrac");
@@ -84,8 +85,8 @@ void setup(){
      .setPosition(150, 350)
      .setSize(400, 70)
      .setVisible(false)
-     .setColor(color(255, 255, 153))
-     .setColorActive(color(255, 255, 153))
+     .setColor(zuta)
+     .setColorActive(zuta)
      .setColorForeground(color(255))
      .setColorBackground(color(0))
      .setFont(NerkoOne)
@@ -95,8 +96,8 @@ void setup(){
      .setPosition(150, 200)
      .setSize(400, 70)
      .setVisible(false)
-     .setColor(color(255, 255, 153))
-     .setColorActive(color(255, 255, 153))
+     .setColor(zuta)
+     .setColorActive(zuta)
      .setColorForeground(color(255))
      .setColorBackground(color(0))
      .setFont(NerkoOne)
@@ -106,8 +107,8 @@ void setup(){
      .setPosition(150, 350)
      .setSize(400, 70)
      .setVisible(false)
-     .setColor(color(255, 255, 153))
-     .setColorActive(color(255, 255, 153))
+     .setColor(zuta)
+     .setColorActive(zuta)
      .setColorForeground(color(255))
      .setColorBackground(color(0))
      .setFont(NerkoOne)
@@ -128,7 +129,7 @@ void setup(){
   // Pokreće pozadinsku muziku
   pozadinskaMuzika.loop();
   
-  osvjeziIgre();
+  //osvjeziIgre(); -> nepotrebno jer je prozor = 0 uvijek, a fja sluzi za osvjezavanje igre 1 odnosno 2, tj kad je prozor jednak 1 odn 2 
 }
 
 // Prilikom pritiska miša provjeravamo koji je prozor
@@ -140,12 +141,12 @@ void mouseClicked() {
     // Igraj prvu igru (unos imena igrača).
     if(prelazak(150, 300, 160, 100)) {
         prozor = 11;
-        osvjeziIgre();
+        //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Igraj drugu igru (unos imena igrača).
     if(prelazak(350, 300, 160, 100)) {
       prozor = 21;     
-      osvjeziIgre();
+      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Pravila.
     if(prelazak(250, 440, 160, 100))
@@ -178,7 +179,7 @@ void mouseClicked() {
     // Natrag na početnu stranicu.
     if(prelazak(150, 200, 160, 100)) {
       prozor = 0;
-      osvjeziIgre();
+      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Igraj ponovno.
     if(prelazak(350, 200, 160, 100)) {
@@ -191,7 +192,7 @@ void mouseClicked() {
     // Natrag na početnu stranicu.
     if(prelazak(150, 300, 160, 100)) {
         prozor = 0;
-        osvjeziIgre();
+        //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
       }
       // Igraj ponovno.
       if(prelazak(350, 300, 160, 100)) {
@@ -204,7 +205,7 @@ void mouseClicked() {
     // Natrag na početnu stranicu.
     if(prelazak(250, 650, 160, 100)) {
       prozor = 0;
-      osvjeziIgre();
+      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     } 
   }
 }
@@ -224,10 +225,10 @@ void draw(){
   //prva igrica
   else if(prozor == 1)
   {
-    if(odabranaPrvaIgra)
-    {
+    //if(odabranaPrvaIgra)  // nepotrebni if?
+    //{
       prikaziPrvuIgru();
-    }
+    //}
   }
   
   // Upis imena za drugu igru.

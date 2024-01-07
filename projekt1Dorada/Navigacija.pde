@@ -1,60 +1,54 @@
 
+color zuta = color(255, 255, 153);
+color bijela = color (255, 255, 255);
+color crna = color(185, 59, 59);
+
+Gumb igraj = new Gumb(270, 500, "IGRAJ!");
+Gumb nazad = new Gumb(270, 650, "NAZAD");
+
 void prikaziPocetniZaslon() {
   background(pozadina);
   
-  fill(255, 255, 153);
-  textSize(60);
-  text("Igrice s lopticom", 330, 100);
+  Text naslov0 = new Text( 330, 100, 60, "Igrice s lopticom", zuta );
+  naslov0.ispisiText();
    
   // 1 IGRAČ
-  fill(185, 59, 59);
-  rect(150, 300, 160, 100);
+  Gumb jedanIgrac = new Gumb( 150, 300, "SKUPI LOPTICE\n(1 igrač)" );
+  jedanIgrac.nacrtajGumb();
   
   // 2 IGRAČA
-  fill(185, 59, 59);
-  rect(350, 300, 160, 100);
+  Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
+  dvaIgraca.nacrtajGumb();
   
   // PRAVILA
-  fill(185, 59, 59);
-  rect(250, 440, 160, 100);
-  
+  Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
+  pravila.nacrtajGumb();
 
-  fill(0, 0, 0);
-  textAlign(CENTER, CENTER);
-  textSize(25);
-  //tri buttona 
-  text("SKUPI LOPTICE\n(1 igrač)", 230, 350);
-  text("PONG\n(2 igrača)", 430, 350);
-  text("PRAVILA", 330, 490);
 }
 
 void ispisiPravila() {
-  background(pozadina);
-      
-    fill(boja1);
-    textSize(40);
-    textAlign(CENTER);
-    text("Skupi loptice (1 igrač)", 350, 70);
-    textSize(30);
-    fill(boja2);
-    text("U ovoj igrici, vi ste crvena loptica. \nPomičući miša, mičete svoju lopticu. \nCilj je tom lopticom dotaknuti što više zelenih. \nSa svakom dotaknutom zelenom lopticom, \nbroj plavih se povećava.\nIgra je gotova kada dotaknete plavu lopticu", 350, 120);
-   
-    fill(boja1);
-    textSize(40);
-    textAlign(CENTER);
-    text("Pong (2 igrača)", 350, 420);
-    textSize(30);
-    fill(boja2);
-    text("Cilj ove igrice je poslati protivniku \nlopticu tako da je on ne može vratiti. \nPobjednik je onaj igrač kojem to 5 puta \npođe za rukom.", 350, 470);
- 
-    fill(185, 59, 59);
-    rect(250, 650, 160, 100); 
-
-    fill(0, 0, 0);
+    background(pozadina);
+     
+    Text naslov5a = new Text( 350, 45, 40, "Skupi loptice (1 igrač)", zuta );
+    naslov5a.ispisiText();
     
-    textAlign(CENTER, CENTER);
-    textSize(25);
-    text("NAZAD", 330, 700);
+    String pravilo1 = "U ovoj igrici, vi ste crvena loptica. Pomičući miša,\nmičete svoju lopticu. " + 
+                      "Cilj je tom lopticom dotaknuti\nzelene loptice i tako skupiti što više bodova u što\nkraćem vremenu. " +  
+                      "Pri doticanju zelene loptice - broj\nbodova, ali i broj plavih loptica se povećava.\n" + 
+                      "Na početku imate 3 života. Doticanjem plavih loptica\ngubite život. Igra je gotova kada izgubite sve živote.\n" + 
+                      "Ako dotaknete žutu lopticu, dobit ćete navedeni bonus,\na ako dotaknete ljubičastu dobit ćete navedenu kaznu.";
+    Text tekst5a = new Text( 350, 225, 30, pravilo1, bijela );
+    tekst5a.ispisiText();
+    
+    Text naslov5b = new Text( 350, 430, 40, "Pong (2 igrača)", zuta );
+    naslov5b.ispisiText();
+    
+    String pravilo2 = "Cilj ove igrice je poslati protivniku \nlopticu tako da je on ne može vratiti. \nPobjednik je onaj igrač kojem to 5 puta \n" +
+                      "pođe za rukom. Upravlja se tipkama\nW-S i strelicama GORE-DOLJE.";
+    Text tekst5b = new Text( 350, 545, 30, pravilo2, bijela );
+    tekst5b.ispisiText();
+    
+    nazad.nacrtajGumb();
 }
 
 

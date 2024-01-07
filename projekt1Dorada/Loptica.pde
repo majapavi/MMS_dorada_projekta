@@ -22,7 +22,7 @@ class Loptica
     if (x <= (radius/2) || x >= width-(radius/2))
       brzinax = -brzinax;
 
-    if (y <= (radius/2) || y >= width-(radius/2))
+    if (y <= (radius/2) || y >= height-(radius/2))
       brzinay = -brzinay;
   }
   
@@ -31,11 +31,11 @@ class Loptica
   }
 
   void postaviNoveKoordinate() {
-    int x, y;
+    float x, y;
     do
     {
-      x = (int) random(width);
-      y = (int) random(height);
+      x = random((radijus/2), width-(radijus/2) );
+      y = random((radijus/2), height-(radijus/2) );
     }
     while (dist(mouseX, mouseY, x, y) < radijus*2 + this.radius);
     this.x = x;
@@ -65,16 +65,16 @@ class Loptica
 //kreiranje loptice na bilo kojoj lokaciji s random brzinom
 Loptica napraviLopticuBoje(color boja)
 {
-  int x, y, brzinax, brzinay;
+  float x, y, brzinax, brzinay;
   //radijus += 1;
   do
   {
-    x = (int) random(width);
-    y = (int) random(height);
+    x = random((radijus/2), width-(radijus/2) );
+    y = random((radijus/2), height-(radijus/2) );
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = (int) random(5);
-  brzinay = (int) random(5);
+  brzinax = random(0.6,5);
+  brzinay = random(0.6,5);
   return new Loptica(x, y, brzinax, brzinay, radijus, boja);
 }
 
@@ -91,16 +91,4 @@ Loptica napraviLopticu()
   brzinax = random(0.6,5);
   brzinay = random(0.6,5);
   return new Loptica(x, y, brzinax, brzinay, radijus, blue); // defaultno plava
-}
-
-//napravi lopticu na početnoj lokaciji u drugoj igrici
-void nacrtajLopticu() {
-  fill(blue);
-  ellipse(lopticax, lopticay, visinaLop, sirinaLop);
-}
-
-//micanje lopcite određenom brzinom
-void pomakniLopticu() {
-  lopticax = lopticax + brzinax;
-  lopticay = lopticay + brzinay;
 }

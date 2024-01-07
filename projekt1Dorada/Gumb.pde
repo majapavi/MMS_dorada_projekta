@@ -6,6 +6,18 @@ class Gumb {
   color rectColor;
   String text;
 
+  // Gumbi s tekstom velicine 160x100
+  Gumb(float x_, float y_, String text_) {
+    x = x_;
+    y = y_;
+    w = 160;
+    h = 100;
+    text = text_;
+    textSize = 25;  // defaultna velicina
+    rectColor = crna; //crvena zapravo na crnoj pozadini
+  }
+  
+  
   Gumb(float x_, float y_, float w_, float h_, String text_) {
     x = x_;
     y = y_;

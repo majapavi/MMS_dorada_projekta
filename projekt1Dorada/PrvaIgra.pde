@@ -23,24 +23,32 @@ int trenutniAllGreen;
 int pocetnoVrijemePrijePU;
 int trenutnoVrijemeDoPU;
 
+String deklinacija(int ukupniRezultat) {
+  String bodova = " bodova";
+  if( ukupniRezultat%10 < 5 && ukupniRezultat/10 != 1 && ukupniRezultat%10 > 0){
+    if(ukupniRezultat == 1 || ukupniRezultat%10 == 1 ){
+      bodova = " bod.";
+    } else {
+      bodova = " boda.";
+    }
+  }
+  return bodova;
+}
+
 void prijavaPrvaIgra() {
   background(pozadina);
 
   igra1_igrac.setVisible(true).setFocus(true);
 
-  Text ime = new Text (350, 300, 70, "Upišite ime:", color(255, 255, 153));
+  Text ime = new Text (350, 300, 70, "Upišite ime:", zuta);
   ime.ispisiText();
 
-
-  // Gumb "Igraj!" s kojim započinje igra nakon upisa
-  // imena.
-
-  Gumb igraj = new Gumb(270, 500, 160, 100, "IGRAJ!", color(185, 59, 59));
+  // Gumb "Igraj!" s kojim započinje igra nakon upisa imena.
   igraj.nacrtajGumb();
+  nazad.nacrtajGumb();
 
   if (igra1_igrac.getText().length() > 20) {
-
-    Text duljinaUsername = new Text(350, 450, 30, "Ime smije sadržavati najviše 20 znakova!", color(185, 59, 59));
+    Text duljinaUsername = new Text(350, 450, "Ime smije sadržavati najviše 20 znakova!");
     duljinaUsername.ispisiText();
   }
 }
@@ -51,7 +59,7 @@ void prikaziPrvuIgru() {
 
     int ukupniRez = rezultat + dodatniBodovi; // pridodat dodatne bodove "rucno" jer je var rezultat counter za broj protivnika
 
-    Text rez = new Text( 80, 40, 30, "Rezultat: " + ukupniRez, color(255, 255, 255));
+    Text rez = new Text( 80, 40, 30, "Rezultat: " + ukupniRez, bijela);
     rez.ispisiText();
 
     // ispis powerupsa
@@ -71,7 +79,7 @@ void prikaziPrvuIgru() {
       }
     }
 
-    Text zivoti = new Text(width - 120, 40, 30, "Broj zivota: " + brojZivota, color(255, 255, 255));
+    Text zivoti = new Text(width - 120, 40, 30, "Broj života: " + brojZivota, bijela);
     zivoti.ispisiText();
 
     crtajLoptice();
@@ -143,25 +151,26 @@ void prikaziKrajPrveIgre() {
   background(pozadina);
 
   int ukupniRezultat = rezultat + dodatniBodovi;
-  Text rez = new Text(350, 100, 60, "Osvojili ste " + ukupniRezultat + " loptica.", color(255, 255, 153));
+  
+  Text rez = new Text(350, 100, 60, "Skupili ste " + ukupniRezultat + deklinacija(ukupniRezultat), zuta);
   rez.ispisiText();
 
   // Prikaži rang listu.
   if (rangPlasiranog != -1 && rezultat != 0)
   {
-    Text rang = new Text(350, 140, 30, "Bravo, " + igrac +"!\nOsvojili ste mjesto " + rangPlasiranog + " na rang listi.", color(255, 255, 153));
+    Text rang = new Text(350, 170, 30, "Bravo, " + igrac +"!\nOsvojili ste " + rangPlasiranog + ". mjesto na rang listi.", zuta);
     rang.ispisiText();
   }
 
-  Text rangLista = new Text(350, 350, 50, "Rang lista", color(255));
+  Text rangLista = new Text(350, 350, 50, "Rang lista", bijela);
   rangLista.ispisiText();
-  prikaziRangListu(360);
+  prikaziRangListu(370);
 
 
-  Gumb pocetniIzbornik = new Gumb(150, 200, 160, 100, 25, "POČETNI \nIZBORNIK", color(185, 59, 59));
+  Gumb pocetniIzbornik = new Gumb(150, 220, "POČETNI \nIZBORNIK");
   pocetniIzbornik.nacrtajGumb();
 
-  Gumb igrajPonovno = new Gumb(350, 200, 160, 100, 25, "IGRAJ \nPONOVO", color(185, 59, 59));
+  Gumb igrajPonovno = new Gumb(350, 220, "IGRAJ \nPONOVO");
   igrajPonovno.nacrtajGumb();
 }
 

@@ -74,11 +74,13 @@ void updateRangTable() {
 void prikaziRangListu(float startY) {
   int i = 1;
   textSize(30);
-  textAlign(LEFT);
   
   for (TableRow row : rang.rows()) {
+    textAlign(LEFT);
     fill(255, 255, 153);
-    text(i + ".    " + row.getString("igrac") + "    " + row.getInt("rezultat") + " bodova    " + row.getInt("vrijeme") + " milisekundi", 100, startY+(40*i));
+    text(i + ".\b" + row.getString("igrac") + "    " + row.getInt("rezultat") + deklinacija(row.getInt("rezultat")), 100, startY+(40*i));
+    textAlign(RIGHT);
+    text(row.getInt("vrijeme") + " milisekundi", 610, startY+(40*i));
     ++i;
   }
 }
@@ -87,11 +89,11 @@ void prikaziRangListu(float startY) {
 //ispisivanje rezultata
 void ispisiRezultat() {
   textSize(30);
-  fill(boja1);
+  fill(zuta);
   textAlign(LEFT);
   text(igrac1, 20, 50);
   text(bodovi1, 20, 80);
-  fill(boja2);
+  fill(bijela);
   textAlign(RIGHT);
   text(igrac2, width-20, 50);
   text(bodovi2, width-20, 80);
