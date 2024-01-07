@@ -27,6 +27,9 @@ void prikaziPocetniZaslon() {
     soundOn.nacrtajGumb();
   }
   
+  // Postavke
+  postavke.nacrtajGumb();
+  
 }
 
 void ispisiPravila() {

@@ -51,27 +51,27 @@ color zuta = color(255, 255, 153);
 color bijela = color (255, 255, 255);
 color crna = color(185, 59, 59);
 
-//// definiranje gumbova na raznim ekranima
-// Pocetni zaslon
-Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
-Gumb dvaIgraca = new Gumb( 350, 200, "PONG\n(2 igrača)");
-Gumb pravila = new Gumb( 250, 340, "PRAVILA" );
-Gumb mute = new Gumb( 150, 480, "MUTE");
-Gumb unmute = new Gumb( 350, 480, "UNMUTE");
-Gumb soundOn = new Gumb( 150, 620, "SOUND ON");
-Gumb soundOff = new Gumb( 350, 620, "SOUND OFF");
+////// definiranje gumbova na raznim ekranima
+//// Pocetni zaslon
+//Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
+//Gumb dvaIgraca = new Gumb( 350, 200, "PONG\n(2 igrača)");
+//Gumb pravila = new Gumb( 250, 340, "PRAVILA" );
+//Gumb mute = new Gumb( 150, 480, "MUTE");
+//Gumb unmute = new Gumb( 350, 480, "UNMUTE");
+//Gumb soundOn = new Gumb( 150, 620, "SOUND ON");
+//Gumb soundOff = new Gumb( 350, 620, "SOUND OFF");
 
-// Zasloni prije igara
-Gumb igraj = new Gumb(270, 500, "IGRAJ!");
-Gumb nazad = new Gumb(270, 650, "NAZAD");
+//// Zasloni prije igara
+//Gumb igraj = new Gumb(270, 500, "IGRAJ!");
+//Gumb nazad = new Gumb(270, 650, "NAZAD");
 
-// Za prvu igru
-Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
-Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
+//// Za prvu igru
+//Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
+//Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
 
-// Za drugu igru
-Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
-Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
+//// Za drugu igru
+//Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
+//Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
 
 
 // Početne postavke pri pokretanju

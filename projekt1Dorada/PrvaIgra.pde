@@ -158,8 +158,11 @@ void prikaziKrajPrveIgre() {
   // Prikaži rang listu.
   if (rangPlasiranog != -1 && rezultat != 0)
   {
-    Text rang = new Text(350, 170, 30, "Bravo, " + igrac +"!\nOsvojili ste " + rangPlasiranog + ". mjesto na rang listi.", zuta);
+    Text rang = new Text(350, 170, 30, "Bravo, " + igrac +"!\nOsvojili ste " + rangPlasiranog + ". mjesto na rang listi! :D", zuta);
     rang.ispisiText();
+  } else {
+    Text tekst = new Text(350, 170, 30, "Žao nam je, niste plasirani na rang listu :(", zuta);
+    tekst.ispisiText();
   }
 
   Text rangLista = new Text(350, 350, 50, "Rang lista", bijela);
