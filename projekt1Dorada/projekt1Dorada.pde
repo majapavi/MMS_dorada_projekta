@@ -10,12 +10,15 @@ AudioSample krajIgre;
 // Zvukovi za drugu igru
 AudioSample udaracLopticeUZid;
 AudioSample udaracLopticeUPlocicu;
+int music = 1;
+int sound = 1;
 
 // Funkcija koja se poziva na kraju izvodenja programa i koja zavrsava izvodenje glazbe
 void stop(){
   pozadinskaMuzika.close();
   minim.stop();
   super.stop();
+  music = 0;
 }
 
 ControlP5 cp5;
@@ -48,18 +51,26 @@ color zuta = color(255, 255, 153);
 color bijela = color (255, 255, 255);
 color crna = color(185, 59, 59);
 
-// definiranje gumbova na raznim ekranima
+//// definiranje gumbova na raznim ekranima
+// Pocetni zaslon
 Gumb jedanIgrac = new Gumb( 150, 300, "SKUPI LOPTICE\n(1 igrač)" );
 Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
 Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
+Gumb mute = new Gumb( 150, 600, "MUTE");
+Gumb unmute = new Gumb( 350, 600, "UNMUTE");
+
+// Zasloni prije igara
 Gumb igraj = new Gumb(270, 500, "IGRAJ!");
 Gumb nazad = new Gumb(270, 650, "NAZAD");
+
 // Za prvu igru
 Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
 Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
+
 // Za drugu igru
 Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
 Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
+
 
 // Početne postavke pri pokretanju
 void setup(){
@@ -138,6 +149,7 @@ void setup(){
   krajIgre = minim.loadSample("Zvuk/krajIgre.wav");
   // Pokreće pozadinsku muziku
   pozadinskaMuzika.loop();
+  music = 1;
   
   //osvjeziIgre(); -> nepotrebno jer je prozor = 0 uvijek, a fja sluzi za osvjezavanje igre 1 odnosno 2, tj kad je prozor jednak 1 odn 2 
 }
@@ -161,6 +173,16 @@ void mouseClicked() {
     // Pravila.
     if( pravila.unutar() ){  //if(prelazak(250, 440, 160, 100))
       prozor = 5;
+    }
+    // Mute button
+    if( mute.unutar() && music == 1){
+      pozadinskaMuzika.pause();
+      music = 0;
+    }
+    if( unmute.unutar() && music == 0){
+      pozadinskaMuzika.loop();
+      music = 1;
+      delay(10);
     }
   }
   // Unos imena igrača prije prve igre.

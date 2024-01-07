@@ -15,6 +15,13 @@ void prikaziPocetniZaslon() {
   // PRAVILA
   pravila.nacrtajGumb();
 
+  // REGULIRAJ ZVUK
+  if(music == 1){
+    mute.nacrtajGumb();
+  } else { 
+    unmute.nacrtajGumb();
+  }
+  
 }
 
 void ispisiPravila() {
