@@ -1,26 +1,6 @@
 import controlP5.*; // Koristimo Textfield iz biblioteke controlC5.
 import ddf.minim.*; // Koristimo biblioteku Minim za dodavanje zvuka
 
-//// Dodavanje varijabli za zvuk
-//Minim minim;
-//AudioPlayer pozadinskaMuzika;
-////Zvukovi za prvu igru
-//AudioSample dolazakNaRangListu;
-//AudioSample krajIgre;
-//// Zvukovi za drugu igru
-//AudioSample udaracLopticeUZid;
-//AudioSample udaracLopticeUPlocicu;
-//int music = 1;
-//int sound = 1;
-
-//// Funkcija koja se poziva na kraju izvodenja programa i koja zavrsava izvodenje glazbe
-//void stop(){
-//  pozadinskaMuzika.close();
-//  minim.stop();
-//  super.stop();
-//  music = 0;
-//}
-
 ControlP5 cp5;
 // Potrebni Textfieldovi.
 // Za prvu igru.
@@ -42,7 +22,7 @@ int rangPlasiranog; // Je li se igrač plasirao na rang listu (top 10).
 PImage pozadina;
 
 // Određivanje trenutno odabranog prozora.
-// pocetni = 0; prva igra = 1; druga igra = 2; povratak = 3, 4; pravila = 5;
+// pocetni = 0; prva igra = 1; druga igra = 2; povratak = 3, 4; pravila = 5; postavke = 6;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
 int prozor = 0;
 int prethodniProzor = 0;
@@ -50,29 +30,8 @@ int prethodniProzor = 0;
 // definiranje korištenih boja
 color zuta = color(255, 255, 153);
 color bijela = color (255, 255, 255);
-color crna = color(185, 59, 59);
-
-////// definiranje gumbova na raznim ekranima
-//// Pocetni zaslon
-//Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
-//Gumb dvaIgraca = new Gumb( 350, 200, "PONG\n(2 igrača)");
-//Gumb pravila = new Gumb( 250, 340, "PRAVILA" );
-//Gumb mute = new Gumb( 150, 480, "MUTE");
-//Gumb unmute = new Gumb( 350, 480, "UNMUTE");
-//Gumb soundOn = new Gumb( 150, 620, "SOUND ON");
-//Gumb soundOff = new Gumb( 350, 620, "SOUND OFF");
-
-//// Zasloni prije igara
-//Gumb igraj = new Gumb(270, 500, "IGRAJ!");
-//Gumb nazad = new Gumb(270, 650, "NAZAD");
-
-//// Za prvu igru
-//Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
-//Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
-
-//// Za drugu igru
-//Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
-//Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
+color crvena = color(185, 59, 59);
+color siva = color(120, 120, 120);
 
 
 // Početne postavke pri pokretanju
@@ -144,18 +103,6 @@ void setup(){
   igra2_igrac2.getCaptionLabel().setText("");
   
   setupZvuka();
-  //// Dodavanje pozadinske glazbe
-  //minim = new Minim(this);
-  //pozadinskaMuzika = minim.loadFile("Zvuk/pozadinskaMuzika.mp3");
-  //udaracLopticeUZid = minim.loadSample("Zvuk/udaracLopticeUZid.mp3");
-  //udaracLopticeUPlocicu = minim.loadSample("Zvuk/udaracLopticeUPlocicu.wav");
-  //dolazakNaRangListu = minim.loadSample("Zvuk/dolazakNaRangListu.wav");
-  //krajIgre = minim.loadSample("Zvuk/krajIgre.wav");
-  //// Pokreće pozadinsku muziku
-  //pozadinskaMuzika.loop();
-  //music = 1;
-  
-  //osvjeziIgre(); -> nepotrebno jer je prozor = 0 uvijek, a fja sluzi za osvjezavanje igre 1 odnosno 2, tj kad je prozor jednak 1 odn 2 
 }
 
 // Prilikom pritiska miša provjeravamo koji je prozor
@@ -173,17 +120,15 @@ void mouseClicked() {
   // Početni prozor.
   if (prozor == 0) {
     // Igraj prvu igru (unos imena igrača).
-    if( jedanIgrac.unutar() ){  // if(prelazak(150, 300, 160, 100)) {
+    if( jedanIgrac.unutar() ){
         prozor = 11;
-        //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Igraj drugu igru (unos imena igrača).
-    if( dvaIgraca.unutar() ){  //if(prelazak(350, 300, 160, 100)) {
-      prozor = 21;     
-      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
+    if( dvaIgraca.unutar() ){
+      prozor = 21;
     }
     // Pravila.
-    if( pravila.unutar() ){  //if(prelazak(250, 440, 160, 100))
+    if( pravila.unutar() ){
       prozor = 5;
     }
     
@@ -229,7 +174,6 @@ void mouseClicked() {
     // Natrag na početnu stranicu.
     if( izbornik.unutar() ){ 
       prozor = 0;
-      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
   }
   // Prozor nakon druge igre.
@@ -242,15 +186,13 @@ void mouseClicked() {
     // Natrag na početnu stranicu.
     if( izbornik.unutar() ){ 
       prozor = 0;
-      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
   }
   // Pravila.
   else if (prozor == 5) {
     // Natrag na početnu stranicu.
-    if( nazad.unutar() ){  //if(prelazak(250, 650, 160, 100)) {
+    if( nazad.unutar() ){
       prozor = 0;
-      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     } 
   }
   // Postavke.
@@ -279,9 +221,8 @@ void mouseClicked() {
     
     /// NAVIGACIJA
     // Nazad na prethodni prozor.
-    if( nazad.unutar() ){  //if(prelazak(250, 650, 160, 100)) {
+    if( nazad.unutar() ){
       prozor = prethodniProzor;
-      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Resetiraj igru.
     if( ponovno.unutar() ){ 
@@ -294,9 +235,23 @@ void mouseClicked() {
     // Natrag na početnu stranicu.
     if( izbornik.unutar() ){ 
       prozor = 0;
-      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
   }
+}
+
+// Prilikom igranja igre, provjeravamo je li pritisnuta tipka za postavke ili za drugu igru
+void keyPressed() {
+  // Zapamti prethodni prozor da se mozes vratiti nazad
+  if(prozor != 6)
+    prethodniProzor = prozor;
+  
+  // Otvaranje postavki tijekom igranja igre
+  if (key == 'p' || key == 'P') {
+    prozor = 6;
+  }
+  
+  // Ispituj ostale tipke za igranje druge igre
+  pritisnutaTipka();
 }
 
 void draw(){
@@ -355,14 +310,6 @@ void draw(){
   else if(prozor == 6)
   {
     prikaziPostavke();
-  }
-  
-  // gumb za postavke je u svakom prozoru osim u postavkama i pravilima
-  if(prozor%10 < 5){
-    if(prozor == 3)
-      postavke.nacrtajGumb(500, 220);  // na kraju prve igre ga pomakni gore
-    else
-      postavke.nacrtajGumb();
   }
   
 }

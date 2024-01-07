@@ -31,6 +31,7 @@ class Gumb {
   String text;
   int pomaknut;
   float xPom, yPom;
+  int sivi;
 
   // Gumbi s tekstom velicine 160x100
   Gumb(float x_, float y_, String text_) {
@@ -40,49 +41,10 @@ class Gumb {
     h = 100;
     text = text_;
     textSize = 25;  // defaultna velicina
-    rectColor = crna; //crvena zapravo na crnoj pozadini
+    rectColor = crvena;
+    pomaknut = 0;
+    sivi = 0;
   }
-  
-  
-  //Gumb(float x_, float y_, float w_, float h_, String text_) {
-  //  x = x_;
-  //  y = y_;
-  //  w = w_;
-  //  h = h_;
-  //  text = text_;
-  //  textSize = 25;  // defaultna velicina
-  //  rectColor = crna; //crvena
-  //}
-  
-  //Gumb(float x_, float y_, float w_, float h_, float textSize_, String text_) {
-  //  x = x_;
-  //  y = y_;
-  //  w = w_;
-  //  h = h_;
-  //  text = text_;
-  //  textSize = textSize_; 
-  //  rectColor = color(255, 0, 0);
-  //}
-  
-  //Gumb(float x_, float y_, float w_, float h_, String text_, color rectColor_) {
-  //  x = x_;
-  //  y = y_;
-  //  w = w_;
-  //  h = h_;
-  //  text = text_;
-  //  textSize = 25;
-  //  rectColor = rectColor_;
-  //}
-  
-  //Gumb(float x_, float y_, float w_, float h_, float textSize_, String text_, color rectColor_) {
-  //  x = x_;
-  //  y = y_;
-  //  w = w_;
-  //  h = h_;
-  //  text = text_;
-  //  textSize = textSize_;
-  //  rectColor = rectColor_;
-  //}
  
   // npr. za crtanje gumba sa slikom, npr. mute 
   Gumb(float x_, float y_, float w_, float h_) {
@@ -95,7 +57,7 @@ class Gumb {
     rectColor = color(181, 172, 153);  //
   }
  
-  // Crtaj na početnim koordinatama
+  // Crtaj na početnim koordinatama i u defaultnoj crvenoj boji
   void nacrtajGumb(){
     fill(rectColor); 
     rect(x, y, w, h);
@@ -104,6 +66,7 @@ class Gumb {
     textSize(textSize);
     text(text, x + w / 2, y + h / 2);
     pomaknut = 0;
+    sivi = 0;
   }
   
   // Crtaj ga pomaknutog
@@ -117,10 +80,25 @@ class Gumb {
     pomaknut = 1;
     xPom = x_;
     yPom = y_;
+    sivi = 0;
+  }
+  
+  // Crtaj sa zadanom bojom
+  void nacrtajGumb(color boja){
+    fill(boja); 
+    rect(x, y, w, h);
+    fill(color(0)); // defaultna boja teksta 
+    textAlign(CENTER, CENTER);
+    textSize(textSize);
+    text(text, x + w / 2, y + h / 2);
+    pomaknut = 0;
+    sivi = 1;
   }
   
   //detektira je li mis unutar gumba
   boolean unutar(){
+    if(sivi == 1)
+      return false;
     if(pomaknut == 0){
       if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
         return true;

@@ -51,6 +51,8 @@ void prijavaPrvaIgra() {
     Text duljinaUsername = new Text(350, 450, "Ime smije sadržavati najviše 20 znakova!");
     duljinaUsername.ispisiText();
   }
+  
+  postavke.nacrtajGumb();
 }
 
 void prikaziPrvuIgru() {
@@ -171,6 +173,7 @@ void prikaziKrajPrveIgre() {
 
   izbornik.nacrtajGumb(50, 220);
   ponovno.nacrtajGumb(250, 220);
+  postavke.nacrtajGumb(500, 220);
 }
 
 void crtajLoptice() { // crtanje loptica odvojeno od detekcije kolizije s lopticama

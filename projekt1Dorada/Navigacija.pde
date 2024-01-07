@@ -15,29 +15,38 @@ void prikaziPocetniZaslon() {
   // PRAVILA
   pravila.nacrtajGumb();
   
+  // POSTAVKE
+  postavke.nacrtajGumb();
 }
 
 void prikaziPostavke(){
-   background(pozadina);
-   
-   izbornik.nacrtajGumb();
-   nazad.nacrtajGumb();
-   // Stavi gumb za resetiranje igre samo ako se prethodno igralo 
-   if( prethodniProzor == 1 || prethodniProzor == 2)
-     ponovno.nacrtajGumb();
+  background(pozadina);
    
   // REGULIRAJ ZVUK
   if(music == 1){
     mute.nacrtajGumb();
+    unmute.nacrtajGumb(siva);
   } else { 
+    mute.nacrtajGumb(siva);
     unmute.nacrtajGumb();
   }
   if(sound == 1){
+    soundOn.nacrtajGumb(siva);
     soundOff.nacrtajGumb();
-  } else { 
+  } else {
     soundOn.nacrtajGumb();
+    soundOff.nacrtajGumb(siva);
   }
   
+  // Stavi gumb za resetiranje igre samo ako se prethodno igralo 
+  if( prethodniProzor == 1 || prethodniProzor == 2)  {
+    ponovno.nacrtajGumb();
+  } else  {
+      ponovno.nacrtajGumb(siva);
+  }
+  
+  izbornik.nacrtajGumb();
+  nazad.nacrtajGumb();
 }
 
 void ispisiPravila() {

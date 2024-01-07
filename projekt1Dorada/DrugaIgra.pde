@@ -31,6 +31,8 @@ void prijavaDrugeIgre() {
     Text duljinaUsername = new Text(350, 450, "Ime smije sadržavati najviše 20 znakova!");
     duljinaUsername.ispisiText();
   }
+  
+  postavke.nacrtajGumb();
 }
 
 void prikaziDruguIgru() {
@@ -58,6 +60,7 @@ void prikaziKrajDrugeIgre() {
     //gumbovi
     ponovno.nacrtajGumb();
     izbornik.nacrtajGumb();
+    postavke.nacrtajGumb();
 }
 
 /// provjera kraja
@@ -101,8 +104,8 @@ void nacrtajPlocicu() {
   rect(desnaD, desnaV, debljina, visina);
 }
 
-void keyPressed() {
-if (key == 'w' || key == 'W') {
+void pritisnutaTipka() {
+  if (key == 'w' || key == 'W') {
     goreL = true;
   }
   if (key == 's' || key == 'S') {
