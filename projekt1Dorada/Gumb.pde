@@ -1,16 +1,16 @@
 //// definiranje gumbova na raznim ekranima
-Gumb postavke = new Gumb( 600, 20, "POSTAVKE");
+Gumb postavke = new Gumb( 600, 720, "POSTAVKE");
 
 // Pocetni zaslon
 Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
 Gumb dvaIgraca = new Gumb( 350, 200, "PONG\n(2 igrača)");
 Gumb pravila = new Gumb( 250, 340, "PRAVILA" );
-Gumb mute = new Gumb( 150, 480, "MUTE");
 
 // Zaslon postavki
-Gumb unmute = new Gumb( 350, 480, "UNMUTE");
-Gumb soundOn = new Gumb( 150, 620, "SOUND ON");
-Gumb soundOff = new Gumb( 350, 620, "SOUND OFF");
+Gumb mute = new Gumb( 150, 200, "MUTE");
+Gumb unmute = new Gumb( 350, 200, "UNMUTE");
+Gumb soundOn = new Gumb( 150, 350, "SOUND ON");
+Gumb soundOff = new Gumb( 350, 350, "SOUND OFF");
 
 // Zasloni prije igara
 Gumb igraj = new Gumb(270, 500, "IGRAJ!");

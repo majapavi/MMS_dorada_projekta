@@ -14,7 +14,14 @@ void prikaziPocetniZaslon() {
   
   // PRAVILA
   pravila.nacrtajGumb();
+  
+}
 
+void prikaziPostavke(){
+   background(pozadina);
+   izbornik.nacrtajGumb();
+   nazad.nacrtajGumb();
+   
   // REGULIRAJ ZVUK
   if(music == 1){
     mute.nacrtajGumb();
@@ -26,9 +33,6 @@ void prikaziPocetniZaslon() {
   } else { 
     soundOn.nacrtajGumb();
   }
-  
-  // Postavke
-  postavke.nacrtajGumb();
   
 }
 

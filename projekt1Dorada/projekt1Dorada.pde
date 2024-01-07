@@ -45,6 +45,7 @@ PImage pozadina;
 // pocetni = 0; prva igra = 1; druga igra = 2; povratak = 3, 4; pravila = 5;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
 int prozor = 0;
+int prethodniProzor = 0;
 
 // definiranje korištenih boja
 color zuta = color(255, 255, 153);
@@ -161,6 +162,14 @@ void setup(){
 // trenutno odabran te koji je gumb (ako ikoji) prisnut
 // u trenutnom prozoru.
 void mouseClicked() {
+  // Zapamti prethodni prozor da se mozes vratiti nazad
+  if(prozor != 6)
+    prethodniProzor = prozor;
+  // Postavke
+  if ( postavke.unutar() ){
+    prozor = 6;
+  }
+  
   // Početni prozor.
   if (prozor == 0) {
     // Igraj prvu igru (unos imena igrača).
@@ -177,22 +186,7 @@ void mouseClicked() {
     if( pravila.unutar() ){  //if(prelazak(250, 440, 160, 100))
       prozor = 5;
     }
-    // Mute button
-    if( mute.unutar() && music == 1){
-      pozadinskaMuzika.pause();
-      music = 0;
-    }
-    if( unmute.unutar() && music == 0){
-      pozadinskaMuzika.loop();
-      music = 1;
-    }
-    // Gumb za uključivanje/isključivanje popratnih zvukova
-    if( soundOff.unutar() && sound == 1){
-      sound = 0;
-    }
-    if( soundOn.unutar() && sound == 0){
-      sound = 1;
-    }
+    
   }
   // Unos imena igrača prije prve igre.
   else if (prozor == 11) {
@@ -259,9 +253,46 @@ void mouseClicked() {
       //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     } 
   }
+  // Postavke.
+  else if (prozor == 6){
+    igra1_igrac.setVisible(false);
+    igra2_igrac1.setVisible(false);
+    igra2_igrac2.setVisible(false);
+    
+    /// POSTAVKE ZVUKA
+    // Mute button
+    if( mute.unutar() && music == 1){
+      pozadinskaMuzika.pause();
+      music = 0;
+    }
+    if( unmute.unutar() && music == 0){
+      pozadinskaMuzika.loop();
+      music = 1;
+    }
+    // Gumb za uključivanje/isključivanje popratnih zvukova
+    if( soundOff.unutar() && sound == 1){
+      sound = 0;
+    }
+    if( soundOn.unutar() && sound == 0){
+      sound = 1;
+    }
+    
+    /// NAVIGACIJA
+    // Nazad na prethodni prozor.
+    if( nazad.unutar() ){  //if(prelazak(250, 650, 160, 100)) {
+      prozor = prethodniProzor;
+      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
+    }
+    // Natrag na početnu stranicu.
+    if( izbornik.unutar() ){ 
+      prozor = 0;
+      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
+    }
+  }
 }
 
 void draw(){
+ 
   //početni prozor
   if(prozor == 0)
   { 
@@ -311,4 +342,15 @@ void draw(){
   {
     ispisiPravila(); 
   }
+  
+  //postavke
+  else if(prozor == 6)
+  {
+    prikaziPostavke();
+  }
+  
+  // gumb za postavke je u svakom prozoru osim u postavkama i pravilima
+  if(prozor%10 < 5)
+    postavke.nacrtajGumb();
+  
 }
