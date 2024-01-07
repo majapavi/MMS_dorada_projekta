@@ -56,10 +56,7 @@ void prikaziKrajDrugeIgre() {
     pobjednik.ispisiText();
     
     //gumbovi
-    Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
     ponovno.nacrtajGumb();
-    
-    Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
     izbornik.nacrtajGumb();
 }
 

@@ -43,15 +43,25 @@ PImage pozadina;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
 int prozor = 0;
 
+// definiranje korištenih boja
+color zuta = color(255, 255, 153);
+color bijela = color (255, 255, 255);
+color crna = color(185, 59, 59);
 
-//funkcija koja provjerava jesmo li prošli preko nekog dijela prozora
-boolean prelazak (int x, int y, int width, int height){
-  if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height)
-    return true;
-  return false;
-}
+// definiranje gumbova na raznim ekranima
+Gumb jedanIgrac = new Gumb( 150, 300, "SKUPI LOPTICE\n(1 igrač)" );
+Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
+Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
+Gumb igraj = new Gumb(270, 500, "IGRAJ!");
+Gumb nazad = new Gumb(270, 650, "NAZAD");
+// Za prvu igru
+Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
+Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
+// Za drugu igru
+Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
+Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
 
-
+// Početne postavke pri pokretanju
 void setup(){
   //najprije postavljamo veličinu i pozadinu koje su uvijek iste
   size(700, 800);
@@ -139,33 +149,38 @@ void mouseClicked() {
   // Početni prozor.
   if (prozor == 0) {
     // Igraj prvu igru (unos imena igrača).
-    if(prelazak(150, 300, 160, 100)) {
+    if( jedanIgrac.unutar() ){  // if(prelazak(150, 300, 160, 100)) {
         prozor = 11;
         //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Igraj drugu igru (unos imena igrača).
-    if(prelazak(350, 300, 160, 100)) {
+    if( dvaIgraca.unutar() ){  //if(prelazak(350, 300, 160, 100)) {
       prozor = 21;     
       //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
     // Pravila.
-    if(prelazak(250, 440, 160, 100))
+    if( pravila.unutar() ){  //if(prelazak(250, 440, 160, 100))
       prozor = 5;
+    }
   }
   // Unos imena igrača prije prve igre.
   else if (prozor == 11) {
     // Početak igre -- pritisak gumba "IGRAJ!".
-    if (prelazak(270, 500, 160, 100) && igra1_igrac.getText().length() <= 20) {
+    if ( igraj.unutar() && igra1_igrac.getText().length() <= 20) {
       prozor = 1;
       igra1_igrac.setVisible(false);
       igrac = igra1_igrac.getText();
       osvjeziIgre(); 
     }
+    else if(nazad.unutar() ){  // Vrati se na početni izbornik
+      prozor = 0;
+      igra1_igrac.setVisible(false);
+    }
   }
   // Unos imena igrača prije druge igre.
   else if (prozor == 21) {
     // Početak igre -- pritisak gumba "IGRAJ!".
-    if (prelazak(270, 500, 160, 100) && igra2_igrac1.getText().length() <= 20 && igra2_igrac2.getText().length() <= 20) {
+    if ( igraj.unutar() && igra2_igrac1.getText().length() <= 20 && igra2_igrac2.getText().length() <= 20) {
       prozor = 2;
       igra2_igrac1.setVisible(false);
       igra2_igrac2.setVisible(false);
@@ -173,37 +188,42 @@ void mouseClicked() {
       igrac2 = igra2_igrac2.getText();
       osvjeziIgre(); 
     }
+    else if(nazad.unutar() ){  // Vrati se na početni izbornik
+      prozor = 0;
+      igra2_igrac1.setVisible(false);
+      igra2_igrac2.setVisible(false);
+    }
   }
   // Prozor nakon prve igre.
   else if (prozor == 3) {
+    // Igraj ponovno.
+    if( igrajPonovno.unutar() ){ 
+      prozor = 1;
+      osvjeziIgre();
+    }
     // Natrag na početnu stranicu.
-    if(prelazak(150, 200, 160, 100)) {
+    if( pocetniIzbornik.unutar() ){ 
       prozor = 0;
       //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
-    // Igraj ponovno.
-    if(prelazak(350, 200, 160, 100)) {
-      prozor = 1;
-      osvjeziIgre();
-    } 
   }
   // Prozor nakon druge igre.
   else if (prozor == 4) {
+    // Igraj ponovno.
+    if( ponovno.unutar() ){ 
+      prozor = 2;
+      osvjeziIgre();
+    }
     // Natrag na početnu stranicu.
-    if(prelazak(150, 300, 160, 100)) {
-        prozor = 0;
-        //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
-      }
-      // Igraj ponovno.
-      if(prelazak(350, 300, 160, 100)) {
-        prozor = 2;
-        osvjeziIgre();
-      } 
+    if( izbornik.unutar() ){ 
+      prozor = 0;
+      //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
+    }
   }
   // Pravila.
   else if (prozor == 5) {
     // Natrag na početnu stranicu.
-    if(prelazak(250, 650, 160, 100)) {
+    if( nazad.unutar() ){  //if(prelazak(250, 650, 160, 100)) {
       prozor = 0;
       //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     } 

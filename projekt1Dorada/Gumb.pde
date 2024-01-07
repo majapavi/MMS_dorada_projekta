@@ -18,45 +18,45 @@ class Gumb {
   }
   
   
-  Gumb(float x_, float y_, float w_, float h_, String text_) {
-    x = x_;
-    y = y_;
-    w = w_;
-    h = h_;
-    text = text_;
-    textSize = 25;  // defaultna velicina
-    rectColor = color(255, 0, 0); //crvena
-  }
+  //Gumb(float x_, float y_, float w_, float h_, String text_) {
+  //  x = x_;
+  //  y = y_;
+  //  w = w_;
+  //  h = h_;
+  //  text = text_;
+  //  textSize = 25;  // defaultna velicina
+  //  rectColor = crna; //crvena
+  //}
   
-  Gumb(float x_, float y_, float w_, float h_, float textSize_, String text_) {
-    x = x_;
-    y = y_;
-    w = w_;
-    h = h_;
-    text = text_;
-    textSize = textSize_; 
-    rectColor = color(255, 0, 0);
-  }
+  //Gumb(float x_, float y_, float w_, float h_, float textSize_, String text_) {
+  //  x = x_;
+  //  y = y_;
+  //  w = w_;
+  //  h = h_;
+  //  text = text_;
+  //  textSize = textSize_; 
+  //  rectColor = color(255, 0, 0);
+  //}
   
-  Gumb(float x_, float y_, float w_, float h_, String text_, color rectColor_) {
-    x = x_;
-    y = y_;
-    w = w_;
-    h = h_;
-    text = text_;
-    textSize = 25;
-    rectColor = rectColor_;
-  }
+  //Gumb(float x_, float y_, float w_, float h_, String text_, color rectColor_) {
+  //  x = x_;
+  //  y = y_;
+  //  w = w_;
+  //  h = h_;
+  //  text = text_;
+  //  textSize = 25;
+  //  rectColor = rectColor_;
+  //}
   
-  Gumb(float x_, float y_, float w_, float h_, float textSize_, String text_, color rectColor_) {
-    x = x_;
-    y = y_;
-    w = w_;
-    h = h_;
-    text = text_;
-    textSize = textSize_;
-    rectColor = rectColor_;
-  }
+  //Gumb(float x_, float y_, float w_, float h_, float textSize_, String text_, color rectColor_) {
+  //  x = x_;
+  //  y = y_;
+  //  w = w_;
+  //  h = h_;
+  //  text = text_;
+  //  textSize = textSize_;
+  //  rectColor = rectColor_;
+  //}
  
   // npr. za crtanje gumba sa slikom, npr. mute 
   Gumb(float x_, float y_, float w_, float h_) {
@@ -77,12 +77,19 @@ class Gumb {
     textAlign(CENTER, CENTER);
     textSize(textSize);
     text(text, x + w / 2, y + h / 2);
-  } 
+  }
   
-   void prikaziSliku(String slika){
+  //detektira je li mis unutar gumba
+  boolean unutar(){
+    if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
+      return true;
+    return false;
+  }
+  
+  void prikaziSliku(String slika){
     //fill(rectColor); 
     //rect(x, y, w, h);
     // potencijalno maskirat.. 
     image(loadImage(slika), x, y, w, h); //  + ".png" dat (pozeljne/skalirane) dimenzije slike td se ne izoblici
-   }
+  }
 }

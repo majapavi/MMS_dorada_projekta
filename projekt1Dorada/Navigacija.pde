@@ -1,10 +1,4 @@
 
-color zuta = color(255, 255, 153);
-color bijela = color (255, 255, 255);
-color crna = color(185, 59, 59);
-
-Gumb igraj = new Gumb(270, 500, "IGRAJ!");
-Gumb nazad = new Gumb(270, 650, "NAZAD");
 
 void prikaziPocetniZaslon() {
   background(pozadina);
@@ -13,15 +7,12 @@ void prikaziPocetniZaslon() {
   naslov0.ispisiText();
    
   // 1 IGRAČ
-  Gumb jedanIgrac = new Gumb( 150, 300, "SKUPI LOPTICE\n(1 igrač)" );
   jedanIgrac.nacrtajGumb();
   
   // 2 IGRAČA
-  Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
   dvaIgraca.nacrtajGumb();
   
   // PRAVILA
-  Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
   pravila.nacrtajGumb();
 
 }

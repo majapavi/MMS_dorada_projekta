@@ -166,11 +166,7 @@ void prikaziKrajPrveIgre() {
   rangLista.ispisiText();
   prikaziRangListu(370);
 
-
-  Gumb pocetniIzbornik = new Gumb(150, 220, "POČETNI \nIZBORNIK");
   pocetniIzbornik.nacrtajGumb();
-
-  Gumb igrajPonovno = new Gumb(350, 220, "IGRAJ \nPONOVO");
   igrajPonovno.nacrtajGumb();
 }
 
