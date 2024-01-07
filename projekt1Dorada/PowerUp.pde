@@ -15,7 +15,7 @@ class PowerUp extends Loptica {
     y += brzinay;
 
     // reflektiranje ako od x
-    if (x <= 0 || x >= width) {
+    if (x <= radius/2 || x >= width-(radius/2) ) {
       brzinax = -brzinax;
     }
     x = x  + sin(a);

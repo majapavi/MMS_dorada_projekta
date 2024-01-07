@@ -22,7 +22,7 @@ class Loptica
     if (x <= (radius/2) || x >= width-(radius/2))
       brzinax = -brzinax;
 
-    if (y <= (radius/2) || y >= height-(radius/2))
+    if (y <= 50 + (radius/2) || y >= height-(radius/2))
       brzinay = -brzinay;
   }
   
@@ -35,7 +35,7 @@ class Loptica
     do
     {
       x = random((radijus/2), width-(radijus/2) );
-      y = random((radijus/2), height-(radijus/2) );
+      y = random(50 + (radijus/2), height-(radijus/2) );
     }
     while (dist(mouseX, mouseY, x, y) < radijus*2 + this.radius);
     this.x = x;
@@ -70,7 +70,7 @@ Loptica napraviLopticuBoje(color boja)
   do
   {
     x = random((radijus/2), width-(radijus/2) );
-    y = random((radijus/2), height-(radijus/2) );
+    y = random( 50 + (radijus/2), height-(radijus/2) );
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
   brzinax = random(0.6,5);
@@ -85,7 +85,7 @@ Loptica napraviLopticu()
   do
   {
     x = random((radijus/2), width-(radijus/2) );
-    y = random((radijus/2), height-(radijus/2) );
+    y = random( 50 + (radijus/2), height-(radijus/2) );
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
   brzinax = random(0.6,5);
