@@ -2,9 +2,9 @@
 Gumb postavke = new Gumb( 500, 650, "POSTAVKE");
 
 // Pocetni zaslon
-Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
-Gumb dvaIgraca = new Gumb( 350, 200, "PONG\n(2 igrača)");
-Gumb pravila = new Gumb( 250, 340, "PRAVILA" );
+Gumb jedanIgrac = new Gumb( 150, 300, "SKUPI LOPTICE\n(1 igrač)" );
+Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
+Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
 
 // Zaslon postavki
 Gumb mute = new Gumb( 150, 200, "MUTE");

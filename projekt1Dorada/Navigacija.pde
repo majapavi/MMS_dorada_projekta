@@ -3,7 +3,7 @@
 void prikaziPocetniZaslon() {
   background(pozadina);
   
-  Text naslov0 = new Text( 330, 100, 60, "Igrice s lopticom", zuta );
+  Text naslov0 = new Text( 350, 100, 60, "Igrice s lopticom", zuta );
   naslov0.ispisiText();
    
   // 1 IGRAČ
