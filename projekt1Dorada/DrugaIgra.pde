@@ -158,11 +158,11 @@ void provjeriOdbijanjeLoptice() {
     osvjeziIgre();
     brzinax = -brzinax;
     bodovi1 = bodovi1 + 1;
-    udaracLopticeUZid.trigger();
+    udaracLopticeUZid.reproduciraj();
   }
   else if ( lopticax < 0 + sirinaLop/2)
   {
-    udaracLopticeUZid.trigger();
+    udaracLopticeUZid.reproduciraj();
     osvjeziIgre();
     bodovi2 = bodovi2 + 1;
   }
@@ -197,13 +197,13 @@ void plocicaUZid() {
 void dodir() {
   if (lopticax - sirinaLop/2 < lijevaL + debljina && lopticay - visinaLop/2 < lijevaV + visina/2 && lopticay + visinaLop/2 > lijevaV - visina/2 ) {
     if (brzinax < 0) {
-      udaracLopticeUPlocicu.trigger();
+      udaracLopticeUPlocicu.reproduciraj();
       brzinax = -(brzinax-0.2);
     }
   }
   else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
     if (brzinax > 0) {
-      udaracLopticeUPlocicu.trigger();
+      udaracLopticeUPlocicu.reproduciraj();
       brzinax = -(brzinax+0.2);
     }
   }

@@ -21,6 +21,11 @@ void prikaziPocetniZaslon() {
   } else { 
     unmute.nacrtajGumb();
   }
+  if(sound == 1){
+    soundOff.nacrtajGumb();
+  } else { 
+    soundOn.nacrtajGumb();
+  }
   
 }
 

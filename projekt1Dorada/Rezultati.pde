@@ -28,7 +28,7 @@ void updateRangTable() {
     }
 
     
-    dolazakNaRangListu.trigger();
+    dolazakNaRangListu.reproduciraj();
     
     saveTable(rang, "data/rang.csv");
   }
@@ -59,14 +59,14 @@ void updateRangTable() {
       }
 
       
-      dolazakNaRangListu.trigger();
+      dolazakNaRangListu.reproduciraj();
       saveTable(rang, "data/rang.csv");
     }
     // U protivnom, igrač se nije plasirao i ne radimo ništa.
     else
     {
       rangPlasiranog = -1;
-      krajIgre.trigger();
+      krajIgre.reproduciraj();
     }
   } 
 }

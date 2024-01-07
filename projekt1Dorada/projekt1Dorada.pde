@@ -1,25 +1,25 @@
 import controlP5.*; // Koristimo Textfield iz biblioteke controlC5.
 import ddf.minim.*; // Koristimo biblioteku Minim za dodavanje zvuka
 
-// Dodavanje varijabli za zvuk
-Minim minim;
-AudioPlayer pozadinskaMuzika;
-//Zvukovi za prvu igru
-AudioSample dolazakNaRangListu;
-AudioSample krajIgre;
-// Zvukovi za drugu igru
-AudioSample udaracLopticeUZid;
-AudioSample udaracLopticeUPlocicu;
-int music = 1;
-int sound = 1;
+//// Dodavanje varijabli za zvuk
+//Minim minim;
+//AudioPlayer pozadinskaMuzika;
+////Zvukovi za prvu igru
+//AudioSample dolazakNaRangListu;
+//AudioSample krajIgre;
+//// Zvukovi za drugu igru
+//AudioSample udaracLopticeUZid;
+//AudioSample udaracLopticeUPlocicu;
+//int music = 1;
+//int sound = 1;
 
-// Funkcija koja se poziva na kraju izvodenja programa i koja zavrsava izvodenje glazbe
-void stop(){
-  pozadinskaMuzika.close();
-  minim.stop();
-  super.stop();
-  music = 0;
-}
+//// Funkcija koja se poziva na kraju izvodenja programa i koja zavrsava izvodenje glazbe
+//void stop(){
+//  pozadinskaMuzika.close();
+//  minim.stop();
+//  super.stop();
+//  music = 0;
+//}
 
 ControlP5 cp5;
 // Potrebni Textfieldovi.
@@ -53,11 +53,13 @@ color crna = color(185, 59, 59);
 
 //// definiranje gumbova na raznim ekranima
 // Pocetni zaslon
-Gumb jedanIgrac = new Gumb( 150, 300, "SKUPI LOPTICE\n(1 igrač)" );
-Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
-Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
-Gumb mute = new Gumb( 150, 600, "MUTE");
-Gumb unmute = new Gumb( 350, 600, "UNMUTE");
+Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
+Gumb dvaIgraca = new Gumb( 350, 200, "PONG\n(2 igrača)");
+Gumb pravila = new Gumb( 250, 340, "PRAVILA" );
+Gumb mute = new Gumb( 150, 480, "MUTE");
+Gumb unmute = new Gumb( 350, 480, "UNMUTE");
+Gumb soundOn = new Gumb( 150, 620, "SOUND ON");
+Gumb soundOff = new Gumb( 350, 620, "SOUND OFF");
 
 // Zasloni prije igara
 Gumb igraj = new Gumb(270, 500, "IGRAJ!");
@@ -140,16 +142,17 @@ void setup(){
   igra2_igrac1.getCaptionLabel().setText("");
   igra2_igrac2.getCaptionLabel().setText("");
   
-  // Dodavanje pozadinske glazbe
-  minim = new Minim(this);
-  pozadinskaMuzika = minim.loadFile("Zvuk/pozadinskaMuzika.mp3");
-  udaracLopticeUZid = minim.loadSample("Zvuk/udaracLopticeUZid.mp3");
-  udaracLopticeUPlocicu = minim.loadSample("Zvuk/udaracLopticeUPlocicu.wav");
-  dolazakNaRangListu = minim.loadSample("Zvuk/dolazakNaRangListu.wav");
-  krajIgre = minim.loadSample("Zvuk/krajIgre.wav");
-  // Pokreće pozadinsku muziku
-  pozadinskaMuzika.loop();
-  music = 1;
+  setupZvuka();
+  //// Dodavanje pozadinske glazbe
+  //minim = new Minim(this);
+  //pozadinskaMuzika = minim.loadFile("Zvuk/pozadinskaMuzika.mp3");
+  //udaracLopticeUZid = minim.loadSample("Zvuk/udaracLopticeUZid.mp3");
+  //udaracLopticeUPlocicu = minim.loadSample("Zvuk/udaracLopticeUPlocicu.wav");
+  //dolazakNaRangListu = minim.loadSample("Zvuk/dolazakNaRangListu.wav");
+  //krajIgre = minim.loadSample("Zvuk/krajIgre.wav");
+  //// Pokreće pozadinsku muziku
+  //pozadinskaMuzika.loop();
+  //music = 1;
   
   //osvjeziIgre(); -> nepotrebno jer je prozor = 0 uvijek, a fja sluzi za osvjezavanje igre 1 odnosno 2, tj kad je prozor jednak 1 odn 2 
 }
@@ -182,7 +185,13 @@ void mouseClicked() {
     if( unmute.unutar() && music == 0){
       pozadinskaMuzika.loop();
       music = 1;
-      delay(10);
+    }
+    // Gumb za uključivanje/isključivanje popratnih zvukova
+    if( soundOff.unutar() && sound == 1){
+      sound = 0;
+    }
+    if( soundOn.unutar() && sound == 0){
+      sound = 1;
     }
   }
   // Unos imena igrača prije prve igre.
