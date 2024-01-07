@@ -19,8 +19,12 @@ void prikaziPocetniZaslon() {
 
 void prikaziPostavke(){
    background(pozadina);
+   
    izbornik.nacrtajGumb();
    nazad.nacrtajGumb();
+   // Stavi gumb za resetiranje igre samo ako se prethodno igralo 
+   if( prethodniProzor == 1 || prethodniProzor == 2)
+     ponovno.nacrtajGumb();
    
   // REGULIRAJ ZVUK
   if(music == 1){
@@ -73,6 +77,7 @@ void osvjeziIgre() {
     dohvati = napraviLopticuBoje(green);
     protiv = new Loptica[50];
     protiv[0] = napraviLopticu();
+    removePowerUp();
   }
   
   //odabrana je druga igrica
@@ -92,5 +97,6 @@ void osvjeziIgre() {
     desnaD = width-40-debljina;
     desnaV = height/2;
     pomak = 5;
+    
   }
 }

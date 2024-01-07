@@ -1,5 +1,5 @@
 //// definiranje gumbova na raznim ekranima
-Gumb postavke = new Gumb( 600, 720, "POSTAVKE");
+Gumb postavke = new Gumb( 500, 650, "POSTAVKE");
 
 // Pocetni zaslon
 Gumb jedanIgrac = new Gumb( 150, 200, "SKUPI LOPTICE\n(1 igrač)" );
@@ -16,13 +16,11 @@ Gumb soundOff = new Gumb( 350, 350, "SOUND OFF");
 Gumb igraj = new Gumb(270, 500, "IGRAJ!");
 Gumb nazad = new Gumb(270, 650, "NAZAD");
 
-// Za prvu igru
-Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
-Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
-
-// Za drugu igru
+// Zasloni za kraj igre
 Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
 Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
+//Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
+//Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
 
 class Gumb {
   
@@ -31,6 +29,8 @@ class Gumb {
   float textSize; 
   color rectColor;
   String text;
+  int pomaknut;
+  float xPom, yPom;
 
   // Gumbi s tekstom velicine 160x100
   Gumb(float x_, float y_, String text_) {
@@ -95,7 +95,7 @@ class Gumb {
     rectColor = color(181, 172, 153);  //
   }
  
- 
+  // Crtaj na početnim koordinatama
   void nacrtajGumb(){
     fill(rectColor); 
     rect(x, y, w, h);
@@ -103,13 +103,35 @@ class Gumb {
     textAlign(CENTER, CENTER);
     textSize(textSize);
     text(text, x + w / 2, y + h / 2);
+    pomaknut = 0;
+  }
+  
+  // Crtaj ga pomaknutog
+  void nacrtajGumb( float x_, float y_ ){
+    fill(rectColor); 
+    rect(x_, y_, w, h);
+    fill(color(0)); // defaultna boja teksta 
+    textAlign(CENTER, CENTER);
+    textSize(textSize);
+    text(text, x_ + w / 2, y_ + h / 2);
+    pomaknut = 1;
+    xPom = x_;
+    yPom = y_;
   }
   
   //detektira je li mis unutar gumba
   boolean unutar(){
-    if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
-      return true;
-    return false;
+    if(pomaknut == 0){
+      if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
+        return true;
+      else
+        return false;
+    } else {
+      if (mouseX >= xPom && mouseX <= xPom + w && mouseY >= yPom && mouseY <= yPom + h)
+        return true;
+      else
+        return false;
+    }
   }
   
   void prikaziSliku(String slika){

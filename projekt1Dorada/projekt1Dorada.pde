@@ -222,12 +222,12 @@ void mouseClicked() {
   // Prozor nakon prve igre.
   else if (prozor == 3) {
     // Igraj ponovno.
-    if( igrajPonovno.unutar() ){ 
+    if( ponovno.unutar() ){ 
       prozor = 1;
       osvjeziIgre();
     }
     // Natrag na početnu stranicu.
-    if( pocetniIzbornik.unutar() ){ 
+    if( izbornik.unutar() ){ 
       prozor = 0;
       //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
     }
@@ -282,6 +282,14 @@ void mouseClicked() {
     if( nazad.unutar() ){  //if(prelazak(250, 650, 160, 100)) {
       prozor = prethodniProzor;
       //osvjeziIgre(); -> također nepotrebno jer nece biti prozor jednak ni 1 ni 2
+    }
+    // Resetiraj igru.
+    if( ponovno.unutar() ){ 
+      prozor = prethodniProzor;
+      osvjeziIgre();
+      bodovi1 = 0; 
+      bodovi2 = 0;
+      p = 0;
     }
     // Natrag na početnu stranicu.
     if( izbornik.unutar() ){ 
@@ -350,7 +358,11 @@ void draw(){
   }
   
   // gumb za postavke je u svakom prozoru osim u postavkama i pravilima
-  if(prozor%10 < 5)
-    postavke.nacrtajGumb();
+  if(prozor%10 < 5){
+    if(prozor == 3)
+      postavke.nacrtajGumb(500, 220);  // na kraju prve igre ga pomakni gore
+    else
+      postavke.nacrtajGumb();
+  }
   
 }

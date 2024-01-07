@@ -169,8 +169,8 @@ void prikaziKrajPrveIgre() {
   rangLista.ispisiText();
   prikaziRangListu(370);
 
-  pocetniIzbornik.nacrtajGumb();
-  igrajPonovno.nacrtajGumb();
+  izbornik.nacrtajGumb(50, 220);
+  ponovno.nacrtajGumb(250, 220);
 }
 
 void crtajLoptice() { // crtanje loptica odvojeno od detekcije kolizije s lopticama
