@@ -24,7 +24,7 @@ PImage pozadina;
 // Određivanje trenutno odabranog prozora.
 // pocetni = 0; prva igra = 1; druga igra = 2; povratak = 3, 4; pravila = 5; postavke = 6;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
-int prozor = 0;
+int prozor = 3;
 int prethodniProzor = 0;
 
 // definiranje korištenih boja
@@ -52,12 +52,14 @@ void setup(){
     rang.addColumn("igrac");
     rang.addColumn("rezultat");
     rang.addColumn("vrijeme");
+    rang.addColumn("sveukupno");
     
     saveTable(rang, "data/rang.csv");    
   }
   rang.setColumnType("rezultat", Table.INT);
   rang.setColumnType("vrijeme", Table.INT);
-  rang.sortReverse(1);
+  rang.setColumnType("sveukupno", Table.INT);
+  rang.sortReverse(3);
   
   // Font NerkoOne preuzet s GoogleFontsa.
   PFont NerkoOne = createFont("NerkoOne-Regular.ttf", 40);

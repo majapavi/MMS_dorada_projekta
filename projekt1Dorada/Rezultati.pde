@@ -6,24 +6,27 @@ void updateRangTable() {
   //print(trajanjeIgre + "\n");
   prosloVrijeme = 0;
   int ukupniRezultat = rezultat + dodatniBodovi;
+  int ukupniRezultatPlusVrijeme = ukupniRezultat*10000000 + (10000000 - trajanjeIgre);
     
   int brojRedaka = rang.getRowCount();
-  // Rang tablica bi već trebala biti sortirana silazno po broju bodova.
+  // Rang tablica bi već trebala biti sortirana silazno po broju bodova i vremenu igranja igre.
   if (brojRedaka < 10) {
     
     TableRow redak = rang.addRow();
     redak.setString("igrac", igrac);
     redak.setInt("rezultat", ukupniRezultat);
     redak.setInt("vrijeme", trajanjeIgre);
+    redak.setInt("sveukupno", ukupniRezultatPlusVrijeme);
 
-    rang.sortReverse(1);
+    rang.sortReverse(3);
     
 
     rangPlasiranog = 1;
-    TableRow novi_redak;
+    //TableRow novi_redak;
     for (TableRow redak_temp : rang.rows())
     {
-      if(redak_temp.getInt("rezultat") == ukupniRezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+      //if(redak_temp.getInt("rezultat") == ukupniRezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+      if( redak_temp.getInt("sveukupno") == ukupniRezultatPlusVrijeme)
         break;
       rangPlasiranog += 1;
     }
@@ -36,8 +39,8 @@ void updateRangTable() {
   else
   {
     TableRow zadnjiRedak = rang.getRow(brojRedaka-1);
-    if (zadnjiRedak.getInt("rezultat") < ukupniRezultat
-      || (zadnjiRedak.getInt("rezultat") == ukupniRezultat && zadnjiRedak.getInt("vrijeme") > trajanjeIgre))
+    if (zadnjiRedak.getInt("sveukupno") < ukupniRezultatPlusVrijeme
+      || (zadnjiRedak.getInt("sveukupno") == ukupniRezultatPlusVrijeme) )// && zadnjiRedak.getInt("vrijeme") > trajanjeIgre))
     {
       // Obriši zadnjeg.
       rang.removeRow(brojRedaka-1);
@@ -46,15 +49,17 @@ void updateRangTable() {
       redak.setString("igrac", igrac);
       redak.setInt("rezultat", ukupniRezultat);  
       redak.setInt("vrijeme", trajanjeIgre);
+      redak.setInt("sveukupno", ukupniRezultatPlusVrijeme);
 
-      rang.sortReverse(1);
+      rang.sortReverse(3);
   
   
       rangPlasiranog = 1;
-      TableRow novi_redak;
+      //TableRow novi_redak;
       for (TableRow redak_temp : rang.rows())
       {
-        if(redak_temp.getInt("rezultat") == ukupniRezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+        //if(redak_temp.getInt("rezultat") == ukupniRezultat && redak_temp.getInt("vrijeme") == trajanjeIgre)
+        if( redak_temp.getInt("sveukupno") == ukupniRezultatPlusVrijeme)
           break;
         rangPlasiranog += 1;
       }
