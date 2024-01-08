@@ -139,7 +139,7 @@ void mouseClicked() {
   // Unos imena igrača prije prve igre.
   else if (prozor == 11) {
     // Početak igre -- pritisak gumba "IGRAJ!".
-    if ( igraj.unutar() && igra1_igrac.getText().length() <= 20) {
+    if ( igraj.unutar() && igra1_igrac.getText().length() <= 14) {
       prozor = 1;
       igra1_igrac.setVisible(false);
       igrac = igra1_igrac.getText();
@@ -153,7 +153,7 @@ void mouseClicked() {
   // Unos imena igrača prije druge igre.
   else if (prozor == 21) {
     // Početak igre -- pritisak gumba "IGRAJ!".
-    if ( igraj.unutar() && igra2_igrac1.getText().length() <= 20 && igra2_igrac2.getText().length() <= 20) {
+    if ( igraj.unutar() && igra2_igrac1.getText().length() <= 14 && igra2_igrac2.getText().length() <= 14) {
       prozor = 2;
       igra2_igrac1.setVisible(false);
       igra2_igrac2.setVisible(false);

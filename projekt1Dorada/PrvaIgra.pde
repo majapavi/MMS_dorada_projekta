@@ -50,8 +50,8 @@ void prijavaPrvaIgra() {
   igraj.nacrtajGumb();
   nazad.nacrtajGumb();
 
-  if (igra1_igrac.getText().length() > 20) {
-    Text duljinaUsername = new Text(350, 450, "Ime smije sadržavati najviše 20 znakova!");
+  if (igra1_igrac.getText().length() > 14) {
+    Text duljinaUsername = new Text(350, 450, 30, "Ime smije sadržavati najviše 14 znakova!", crvena);
     duljinaUsername.ispisiText();
   }
   
@@ -91,11 +91,7 @@ void prikaziPrvuIgru() {
     trenutnoVrijeme = millis() - vrijemePocetka;
     trajanjeIgre = trenutnoVrijeme + prosloVrijeme;
     
-    sekunde = trajanjeIgre/1000;
-    minute = sekunde/60;
-    sekunde = sekunde - minute*60;
-    
-    Text vrijeme = pretvoriVrijeme(minute, sekunde);
+    Text vrijeme = new Text( width/2, 20, 30, pretvoriVrijeme(trajanjeIgre), bijela);
     vrijeme.ispisiText();
 
     crtajLoptice();

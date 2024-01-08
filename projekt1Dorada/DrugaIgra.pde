@@ -22,13 +22,13 @@ void prijavaDrugeIgre() {
   igraj.nacrtajGumb();
   nazad.nacrtajGumb();
   
-  if (igra2_igrac1.getText().length() > 20) {
-    Text duljinaUsername = new Text(350, 300, "Ime smije sadržavati najviše 20 znakova!");
+  if (igra2_igrac1.getText().length() > 14) {
+    Text duljinaUsername = new Text(350, 300, 30, "Ime smije sadržavati najviše 14 znakova!", crvena);
     duljinaUsername.ispisiText();
   }
   
-  if (igra2_igrac2.getText().length() > 20) {
-    Text duljinaUsername = new Text(350, 450, "Ime smije sadržavati najviše 20 znakova!");
+  if (igra2_igrac2.getText().length() > 14) {
+    Text duljinaUsername = new Text(350, 450, 30, "Ime smije sadržavati najviše 14 znakova!", crvena);
     duljinaUsername.ispisiText();
   }
   

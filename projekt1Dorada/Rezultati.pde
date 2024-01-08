@@ -77,11 +77,15 @@ void prikaziRangListu(float startY) {
   textSize(30);
   
   for (TableRow row : rang.rows()) {
-    textAlign(LEFT);
-    fill(255, 255, 153);
-    text(i + ".\b" + row.getString("igrac") + "    " + row.getInt("rezultat") + deklinacija(row.getInt("rezultat")), 100, startY+(40*i));
     textAlign(RIGHT);
-    text(row.getInt("vrijeme") + " milisekundi", 610, startY+(40*i));
+    fill(zuta);
+    text(i + ".\b" , 100, startY+(40*i));
+    textAlign(LEFT);
+    text(row.getString("igrac") , 105, startY+(40*i) );
+    text(row.getInt("rezultat") + deklinacija(row.getInt("rezultat")), 300, startY+(40*i));
+    //textAlign(RIGHT);
+    //text(row.getInt("vrijeme") + " milisekundi", 610, startY+(40*i));
+    text("vrijeme: " + pretvoriVrijeme( row.getInt("vrijeme") ), 500, startY+(40*i));
     ++i;
   }
 }

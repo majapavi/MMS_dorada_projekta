@@ -47,20 +47,24 @@ class Text {
   
 }
 
-Text pretvoriVrijeme(int min, int sec){
-  String minuta, sekundi;
-  if( min < 10 ){
-    minuta = "0"+min;
-  }
-  else {
-    minuta = ""+min;
-  }
-  if( sec < 10 ){
-    sekundi = "0"+sec;
-  }
-  else {
-    sekundi = ""+sec;
-  }
-  Text vrijeme = new Text( width/2, 20, 30, minuta + ":" + sekundi, bijela);
+String pretvoriVrijeme(int t){
+  String vrijeme;
+  int minute, sekunde;
+  sekunde = t/1000;
+  minute = sekunde/60;
+  sekunde = sekunde - minute*60;
+  
+  if( minute < 10 )
+    vrijeme = "0"+minute;
+  else
+    vrijeme = ""+minute;
+  
+  vrijeme = vrijeme + ":";
+  
+  if( sekunde < 10 )
+    vrijeme = vrijeme + "0"+sekunde;
+  else
+    vrijeme = vrijeme + ""+sekunde;
+  
   return vrijeme;
 }
