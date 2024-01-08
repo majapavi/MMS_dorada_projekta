@@ -103,6 +103,9 @@ void setup(){
   igra2_igrac2.getCaptionLabel().setText("");
   
   setupZvuka();
+  
+  // potrebno za evidenciju trajanja igre
+  prosloVrijeme = 0;
 }
 
 // Prilikom pritiska miša provjeravamo koji je prozor
@@ -223,6 +226,7 @@ void mouseClicked() {
     // Nazad na prethodni prozor.
     if( nazad.unutar() ){
       prozor = prethodniProzor;
+      vrijemePocetka = millis();
     }
     // Resetiraj igru.
     if( ponovno.unutar() ){ 
@@ -248,6 +252,9 @@ void keyPressed() {
   // Otvaranje postavki tijekom igranja igre
   if (key == 'p' || key == 'P') {
     prozor = 6;
+    if(prethodniProzor == 1){
+      prosloVrijeme = prosloVrijeme + ( millis() - vrijemePocetka );
+    }
   }
   
   // Ispituj ostale tipke za igranje druge igre

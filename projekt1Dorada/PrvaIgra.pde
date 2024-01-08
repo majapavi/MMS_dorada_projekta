@@ -11,7 +11,7 @@ boolean kraj;
 Loptica[] protiv;
 Loptica dohvati;
 int vrijemePocetka, vrijemeKraja, trajanjeIgre;
-int trenutnoVrijeme, minute, sekunde;
+int trenutnoVrijeme, minute, sekunde, prosloVrijeme;
 color blue = color(0, 0, 255), green = color(0, 255, 0), red = color(255, 0, 0), purple = color(128, 0, 128), yellow = color(255, 255, 0);
 int powerUpCount = 0;
 PowerUp powerUp;
@@ -87,9 +87,11 @@ void prikaziPrvuIgru() {
     Text zivoti = new Text(width - 120, 40, 30, "Broj života: " + brojZivota, bijela);
     zivoti.ispisiText();
     
+    // ispis vremena igranja igrice    
     trenutnoVrijeme = millis() - vrijemePocetka;
-    //trajanjeIgre = trenutnoVrijeme - vrijemePocetka;
-    sekunde = trenutnoVrijeme/1000;
+    trajanjeIgre = trenutnoVrijeme + prosloVrijeme;
+    
+    sekunde = trajanjeIgre/1000;
     minute = sekunde/60;
     sekunde = sekunde - minute*60;
     

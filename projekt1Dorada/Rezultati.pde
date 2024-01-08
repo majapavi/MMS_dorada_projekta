@@ -2,8 +2,9 @@
 // Ažurira rang listu nakon završetka prve igre.
 void updateRangTable() {
   vrijemeKraja = millis();
-  trajanjeIgre = vrijemeKraja - vrijemePocetka;
+  trajanjeIgre = vrijemeKraja - vrijemePocetka + prosloVrijeme;
   //print(trajanjeIgre + "\n");
+  prosloVrijeme = 0;
   int ukupniRezultat = rezultat + dodatniBodovi;
     
   int brojRedaka = rang.getRowCount();

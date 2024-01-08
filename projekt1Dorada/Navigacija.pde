@@ -80,6 +80,7 @@ void osvjeziIgre() {
   if(prozor == 1)
   {
     rezultat = 0;
+    dodatniBodovi = 0;
     brojZivota = 3;
     odabranaPrvaIgra = true;
     vrijemePocetka = millis();
@@ -87,6 +88,7 @@ void osvjeziIgre() {
     protiv = new Loptica[50];
     protiv[0] = napraviLopticu();
     removePowerUp();
+    prosloVrijeme = 0;
   }
   
   //odabrana je druga igrica
