@@ -11,6 +11,7 @@ boolean kraj;
 Loptica[] protiv;
 Loptica dohvati;
 int vrijemePocetka, vrijemeKraja, trajanjeIgre;
+int trenutnoVrijeme, minute, sekunde;
 color blue = color(0, 0, 255), green = color(0, 255, 0), red = color(255, 0, 0), purple = color(128, 0, 128), yellow = color(255, 255, 0);
 int powerUpCount = 0;
 PowerUp powerUp;
@@ -72,19 +73,28 @@ void prikaziPrvuIgru() {
       String imePowerUpa = powerUp.ime;
 
       if (imePowerUpa == "ExtraPoints") {
-        Text power = new Text(80, 60, 30, powerUp.ime, powerUp.boja);
+        Text power = new Text(80, 60, 30, powerUp.ime, powerUp.boja); // ispod rezultata
         power.ispisiText();
       } else if (imePowerUpa == "addExtraLife") {
-        Text power = new Text(width - 120, 60, 30, powerUp.ime, powerUp.boja);
+        Text power = new Text(width - 120, 60, 30, powerUp.ime, powerUp.boja); // ispod broja zivota
         power.ispisiText();
       } else {
-        Text power = new Text(width/2 - 20, 50, 30, "PowerUp: " + powerUp.ime, powerUp.boja); // ili bez "PowerUp: "
+        Text power = new Text(width/2 - 20, 50, 30, powerUp.ime, powerUp.boja);  // na sredini
         power.ispisiText();
       }
     }
 
     Text zivoti = new Text(width - 120, 40, 30, "Broj života: " + brojZivota, bijela);
     zivoti.ispisiText();
+    
+    trenutnoVrijeme = millis() - vrijemePocetka;
+    //trajanjeIgre = trenutnoVrijeme - vrijemePocetka;
+    sekunde = trenutnoVrijeme/1000;
+    minute = sekunde/60;
+    sekunde = sekunde - minute*60;
+    
+    Text vrijeme = pretvoriVrijeme(minute, sekunde);
+    vrijeme.ispisiText();
 
     crtajLoptice();
 
