@@ -1,20 +1,23 @@
 # MMS_dorada_projekta
+
+## Izradili
+
 Dorada studentskog projekta Igra s lopticom inicijalne autorice Tee Poljanić iz godine 2019./20.
 kojeg je naknadno doradila Tihana Štifanić godine 2020./21.
+te Ivka Ćaćić, Maja Pavičić i Magdalena Potočnjak 2023./24. godine.
+--------------------------------------------------------------------------------------------------
 
-# Prijedlozi mogućih poboljšanja
-- Dodavanje zvuka
-- Sporije povećavanje brzine loptica
-- Dodavanje pozadine tekstu za bolju čitljivost
+## Opis aplikacije
 
-# Prijedlozi mogućih daljnjih poboljšanja kolegice Tihane Štifanić
-- uvođenje klase `Button` koja čuva podatke o poziciji, širini, visini, boji i tekstu gumba. Također, može sadržavati metode koje ispituju jesu li koordinate miša unutar gumba te iscrtavaju gumb na ekran,
-- dodatak atributa radijusa i boje klasi `Loptica`,
-- uvođenje mogućnosti odabira boje korisnikove loptice u prvoj igri,
-- uvođenje različitih veličina plavih loptica (koje se stalno stvaraju) u prvoj igri,
-- uvođenje mogućnosti odabira boje pločica u drugoj igri,
-- uvođenje mogućnosti odabira teme igre (pozadinske slike i palete istaknutih boja),
-- uvođenje mjerenja vremena u obje igre, koje se onda može koristiti prilikom formiranja rang listi,
-- implementacija druge igre za igru preko mreže, a ne samo lokalno,
-- dodavanje još nekih igara, po uzoru na npr. [Puzzle Bobble](https://en.wikipedia.org/wiki/Puzzle_Bobble) ili [Breakout](https://en.wikipedia.org/wiki/Breakout_(video_game)).
+Aplikacija u sebi sadrži dvije igrice - prvu Skupi loptice i drugu Pong.
 
+U prvoj igri sudjeluje jedan igrač kojemu je cilj pomicanjem crvene loptice mišem sakupiti što više zelenih loptica
+u što kraćem vremenu, pritom izbjegavajući dodirnuti plave loptice.
+Povremeno se među lopticama pojavljuju i powerUps-i odnosno žute loptice čijim sakupljanjem dobivamo neke benefite
+i ljubičaste loptice čijim sakupljanjem dobivamo neke kazne.
+Najboljih 10 igrača plasira se na rang listu.
+
+U drugoj igrici sudjeluju dva igrača i jedna loptica.
+Svaki igrač pomiče pločicu uz svoj rub ekrana gore-dolje pomoću tipki w-s odnosno strelica gore-dolje.
+Svakom igraču je cilj "obraniti svoj rub ekrana" te vratiti suprotnom igraču lopticu na način da ju on ne uspije obraniti.
+Oba igrača na početku imaju 5 života i pobijedio je onaj koji zadnji ostane s pozitivnim brojem života.

@@ -34,14 +34,6 @@ class Zvuk {
   
 }
 
-// Funkcija koja se poziva na kraju izvodenja programa i koja zavrsava izvodenje glazbe
-void stop(){
-  pozadinskaMuzika.close();
-  minim.stop();
-  super.stop();
-  music = 0;
-}
-
 void setupZvuka(){
   // Dodavanje pozadinske glazbe
   minim = new Minim(this);
