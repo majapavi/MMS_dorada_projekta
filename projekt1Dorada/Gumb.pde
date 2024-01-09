@@ -7,8 +7,8 @@ Gumb dvaIgraca = new Gumb( 350, 300, "PONG\n(2 igrača)");
 Gumb pravila = new Gumb( 250, 440, "PRAVILA" );
 
 // Zaslon postavki
-Gumb mute = new Gumb( 150, 200, "MUTE");
-Gumb unmute = new Gumb( 350, 200, "UNMUTE");
+Gumb mute = new Gumb( 350, 200, "MUSIC OFF");
+Gumb unmute = new Gumb( 150, 200, "MUSIC ON");
 Gumb soundOn = new Gumb( 150, 350, "SOUND ON");
 Gumb soundOff = new Gumb( 350, 350, "SOUND OFF");
 

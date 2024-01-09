@@ -46,3 +46,25 @@ class Text {
   }
   
 }
+
+String pretvoriVrijeme(int t){
+  String vrijeme;
+  int minute, sekunde;
+  sekunde = t/1000;
+  minute = sekunde/60;
+  sekunde = sekunde - minute*60;
+  
+  if( minute < 10 )
+    vrijeme = "0"+minute;
+  else
+    vrijeme = ""+minute;
+  
+  vrijeme = vrijeme + ":";
+  
+  if( sekunde < 10 )
+    vrijeme = vrijeme + "0"+sekunde;
+  else
+    vrijeme = vrijeme + ""+sekunde;
+  
+  return vrijeme;
+}

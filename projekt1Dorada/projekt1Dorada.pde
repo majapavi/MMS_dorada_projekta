@@ -24,7 +24,7 @@ PImage pozadina;
 // Određivanje trenutno odabranog prozora.
 // pocetni = 0; prva igra = 1; druga igra = 2; povratak = 3, 4; pravila = 5; postavke = 6;
 // upis imena za prvu igru = 11; upis imena za drugu igru = 21;
-int prozor = 0;
+int prozor = 3;
 int prethodniProzor = 0;
 
 // definiranje korištenih boja
@@ -52,12 +52,14 @@ void setup(){
     rang.addColumn("igrac");
     rang.addColumn("rezultat");
     rang.addColumn("vrijeme");
+    rang.addColumn("sveukupno");
     
     saveTable(rang, "data/rang.csv");    
   }
   rang.setColumnType("rezultat", Table.INT);
   rang.setColumnType("vrijeme", Table.INT);
-  rang.sortReverse(1);
+  rang.setColumnType("sveukupno", Table.INT);
+  rang.sortReverse(3);
   
   // Font NerkoOne preuzet s GoogleFontsa.
   PFont NerkoOne = createFont("NerkoOne-Regular.ttf", 40);
@@ -103,6 +105,9 @@ void setup(){
   igra2_igrac2.getCaptionLabel().setText("");
   
   setupZvuka();
+  
+  // potrebno za evidenciju trajanja igre
+  prosloVrijeme = 0;
 }
 
 // Prilikom pritiska miša provjeravamo koji je prozor
@@ -136,7 +141,7 @@ void mouseClicked() {
   // Unos imena igrača prije prve igre.
   else if (prozor == 11) {
     // Početak igre -- pritisak gumba "IGRAJ!".
-    if ( igraj.unutar() && igra1_igrac.getText().length() <= 20) {
+    if ( igraj.unutar() && igra1_igrac.getText().length() <= 14) {
       prozor = 1;
       igra1_igrac.setVisible(false);
       igrac = igra1_igrac.getText();
@@ -150,7 +155,7 @@ void mouseClicked() {
   // Unos imena igrača prije druge igre.
   else if (prozor == 21) {
     // Početak igre -- pritisak gumba "IGRAJ!".
-    if ( igraj.unutar() && igra2_igrac1.getText().length() <= 20 && igra2_igrac2.getText().length() <= 20) {
+    if ( igraj.unutar() && igra2_igrac1.getText().length() <= 14 && igra2_igrac2.getText().length() <= 14) {
       prozor = 2;
       igra2_igrac1.setVisible(false);
       igra2_igrac2.setVisible(false);
@@ -223,6 +228,7 @@ void mouseClicked() {
     // Nazad na prethodni prozor.
     if( nazad.unutar() ){
       prozor = prethodniProzor;
+      vrijemePocetka = millis();
     }
     // Resetiraj igru.
     if( ponovno.unutar() ){ 
@@ -248,6 +254,9 @@ void keyPressed() {
   // Otvaranje postavki tijekom igranja igre
   if (key == 'p' || key == 'P') {
     prozor = 6;
+    if(prethodniProzor == 1){
+      prosloVrijeme = prosloVrijeme + ( millis() - vrijemePocetka );
+    }
   }
   
   // Ispituj ostale tipke za igranje druge igre
