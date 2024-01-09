@@ -4,34 +4,35 @@ float lopticax, lopticay, brzinax, brzinay;
 int lijevaL, lijevaV, debljina, visina, pomak;
 int desnaD, desnaV;
 boolean doleL, doleD, goreL, goreD;
-int bodovi1 = 0; 
+int bodovi1 = 0;
 int bodovi2 = 0;
 int p = 0;
 
 
 void prijavaDrugeIgre() {
   background(pozadina);
-    
+
   igra2_igrac1.setVisible(true);
   igra2_igrac2.setVisible(true);
-  
+
   Text ime = new Text (350, 150, 70, "Upišite imena:", zuta);
   ime.ispisiText();
-  
+
   // Gumb "Igraj!" s kojim započinje igra nakon upisa imena.
   igraj.nacrtajGumb();
   nazad.nacrtajGumb();
-  
+
+  // Provjeri duljinu unesenih imena igrača
   if (igra2_igrac1.getText().length() > 14) {
     Text duljinaUsername = new Text(350, 300, 30, "Ime smije sadržavati najviše 14 znakova!", crvena);
     duljinaUsername.ispisiText();
   }
-  
+
   if (igra2_igrac2.getText().length() > 14) {
     Text duljinaUsername = new Text(350, 450, 30, "Ime smije sadržavati najviše 14 znakova!", crvena);
     duljinaUsername.ispisiText();
   }
-  
+
   postavke.nacrtajGumb();
 }
 
@@ -49,32 +50,32 @@ void prikaziDruguIgru() {
 }
 
 void prikaziKrajDrugeIgre() {
-    background(pozadina);
-    
-    // Proglašenje pobjednika
-    String pobjedio = "Kraj igre!\nPobijedio je igrač\n";
-    pobjedio = (p == 1) ? pobjedio+igrac1 : pobjedio+igrac2;
-    Text pobjednik = new Text(350, 200, 70, pobjedio, zuta);
-    pobjednik.ispisiText();
-    
-    //gumbovi
-    ponovno.nacrtajGumb();
-    izbornik.nacrtajGumb();
-    postavke.nacrtajGumb();
+  background(pozadina);
+
+  // Proglašenje pobjednika
+  String pobjedio = "Kraj igre!\nPobijedio je igrač\n";
+  pobjedio = (p == 1) ? pobjedio+igrac1 : pobjedio+igrac2;
+  Text pobjednik = new Text(350, 200, 70, pobjedio, zuta);
+  pobjednik.ispisiText();
+
+  //gumbovi
+  ponovno.nacrtajGumb();
+  izbornik.nacrtajGumb();
+  postavke.nacrtajGumb();
 }
 
 /// provjera kraja
 
 //određivanje kada smo došli do kraja igrice
-void provjeriKraj() 
+void provjeriKraj()
 {
-  if(bodovi1 == 5) {
+  if (bodovi1 == 5) {
     prozor = 4;
-    bodovi1=0; 
+    bodovi1=0;
     bodovi2=0;
     p=1;
   }
-  if(bodovi2 == 5) {
+  if (bodovi2 == 5) {
     prozor = 4;
     bodovi1=0;
     bodovi2=0;
@@ -135,7 +136,7 @@ void keyReleased() {
 }
 
 //pomicanje pločice gore ili dole
-void pomakniPlocicu(){
+void pomakniPlocicu() {
   if (goreL) {
     lijevaV = lijevaV - pomak;
   }
@@ -156,14 +157,13 @@ void pomakniPlocicu(){
 //udarac loptice u bočne strane ili gornju i donju
 void provjeriOdbijanjeLoptice() {
   // bocne strane
- if ( lopticax > width - sirinaLop/2)
- {
+  if ( lopticax > width - sirinaLop/2)
+  {
     osvjeziIgre();
     brzinax = -brzinax;
     bodovi1 = bodovi1 + 1;
     udaracLopticeUZid.reproduciraj();
-  }
-  else if ( lopticax < 0 + sirinaLop/2)
+  } else if ( lopticax < 0 + sirinaLop/2)
   {
     udaracLopticeUZid.reproduciraj();
     osvjeziIgre();
@@ -173,8 +173,7 @@ void provjeriOdbijanjeLoptice() {
   if ( lopticay > height - visinaLop/2)
   {
     brzinay = -brzinay;
-  }
-  else if ( lopticay < 0 + visinaLop/2)
+  } else if ( lopticay < 0 + visinaLop/2)
   {
     brzinay = -brzinay;
   }
@@ -203,8 +202,7 @@ void dodir() {
       udaracLopticeUPlocicu.reproduciraj();
       brzinax = -(brzinax-0.2);
     }
-  }
-  else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
+  } else if (lopticax + sirinaLop/2 > desnaD && lopticay - visinaLop/2 < desnaV + visina/2 && lopticay + visinaLop/2 > desnaV - visina/2 ) {
     if (brzinax > 0) {
       udaracLopticeUPlocicu.reproduciraj();
       brzinax = -(brzinax+0.2);

@@ -25,11 +25,12 @@ class Loptica
     if (y <= 50 + (radius/2) || y >= height-(radius/2))
       brzinay = -brzinay;
   }
-  
+
   void promijeniBojuU(color novaBoja) {
     boja = novaBoja;
   }
 
+  // kada se uhvati zelena loptica, postavi ju na neko drugo random mjesto
   void postaviNoveKoordinate() {
     float x, y;
     do
@@ -47,62 +48,63 @@ class Loptica
     x += x_;
     y += y_;
   }
-  
+
   void updateRadius(float r) {
     if ( r >= 20 || r <= 150 ) {
       radius = r;
     }
   }
- 
-  void updateBrzinu(float decimPostotakX, float decimPostotakY){
-    if (brzinax <= 5 && brzinay <= 5 && brzinax >= 1 && brzinay >=1){
+
+  void updateBrzinu(float decimPostotakX, float decimPostotakY) {
+    if (brzinax <= 5 && brzinay <= 5 && brzinax >= 1 && brzinay >=1) {
       brzinax *= decimPostotakX;
       brzinay *= decimPostotakY;
     }
   }
-  
-    void shakeIfActive() {
+
+  // zatresi crvenu lopticu prilikom sudara sa plavom
+  void shakeIfActive() {
     trenutniShake = millis();
     if (trenutniShake - startShake <= 1000) {
       trenutniShake = millis();
       fill(red);
       ellipse(mouseX + random(-10, 10), mouseY + random(-10, 10), dohvati.radius, dohvati.radius);
     } else {
-      
-     fill(red);
-     ellipse(mouseX, mouseY, dohvati.radius, dohvati.radius);
-   }
+
+      fill(red);
+      ellipse(mouseX, mouseY, dohvati.radius, dohvati.radius);
+    }
   }
-  
 }
 
 //kreiranje loptice na bilo kojoj lokaciji s random brzinom
-Loptica napraviLopticuBoje(color boja)
-{
-  float x, y, brzinax, brzinay;
-  //radijus += 1;
-  do
-  {
-    x = random((radijus/2), width-(radijus/2) );
-    y = random( 50 + (radijus/2), height-(radijus/2) );
-  }
-  while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = random(0.6,5);
-  brzinay = random(0.6,5);
-  return new Loptica(x, y, brzinax, brzinay, radijus, boja);
-}
-
 Loptica napraviLopticu()
 {
   float x, y, brzinax, brzinay;
-  //radijus += 1;
+
   do
   {
     x = random((radijus/2), width-(radijus/2) );
     y = random( 50 + (radijus/2), height-(radijus/2) );
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinax = random(0.6,5);
-  brzinay = random(0.6,5);
+  brzinax = random(0.6, 5);
+  brzinay = random(0.6, 5);
   return new Loptica(x, y, brzinax, brzinay, radijus, blue); // defaultno plava
+}
+
+//kreiranje loptice određene boje
+Loptica napraviLopticuBoje(color boja)
+{
+  float x, y, brzinax, brzinay;
+
+  do
+  {
+    x = random((radijus/2), width-(radijus/2) );
+    y = random( 50 + (radijus/2), height-(radijus/2) );
+  }
+  while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
+  brzinax = random(0.6, 5);
+  brzinay = random(0.6, 5);
+  return new Loptica(x, y, brzinax, brzinay, radijus, boja);
 }

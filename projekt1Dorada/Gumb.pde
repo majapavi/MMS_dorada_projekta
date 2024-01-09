@@ -19,14 +19,12 @@ Gumb nazad = new Gumb(270, 650, "NAZAD");
 // Zasloni za kraj igre
 Gumb ponovno = new Gumb( 150, 500, "IGRAJ \nPONOVO" );
 Gumb izbornik = new Gumb( 350, 500, "POČETNI \nIZBORNIK" );
-//Gumb igrajPonovno = new Gumb(150, 220, "IGRAJ \nPONOVO");
-//Gumb pocetniIzbornik = new Gumb(350, 220, "POČETNI \nIZBORNIK" );
 
 class Gumb {
-  
+
   float x, y;
-  float w, h; 
-  float textSize; 
+  float w, h;
+  float textSize;
   color rectColor;
   String text;
   int pomaknut;
@@ -45,35 +43,35 @@ class Gumb {
     pomaknut = 0;
     sivi = 0;
   }
- 
-  // npr. za crtanje gumba sa slikom, npr. mute 
+
+  // npr. za crtanje gumba sa slikom, npr. mute
   Gumb(float x_, float y_, float w_, float h_) {
     x = x_;
     y = y_;
     w = w_;
     h = h_;
-    text = ""; 
-    textSize = 25;  
-    rectColor = color(181, 172, 153);  //
+    text = "";
+    textSize = 25;
+    rectColor = color(181, 172, 153);
   }
- 
+
   // Crtaj na početnim koordinatama i u defaultnoj crvenoj boji
-  void nacrtajGumb(){
-    fill(rectColor); 
+  void nacrtajGumb() {
+    fill(rectColor);
     rect(x, y, w, h);
-    fill(color(0)); // defaultna boja teksta 
+    fill(color(0)); // defaultna boja teksta
     textAlign(CENTER, CENTER);
     textSize(textSize);
     text(text, x + w / 2, y + h / 2);
     pomaknut = 0;
     sivi = 0;
   }
-  
+
   // Crtaj ga pomaknutog
-  void nacrtajGumb( float x_, float y_ ){
-    fill(rectColor); 
+  void nacrtajGumb( float x_, float y_ ) {
+    fill(rectColor);
     rect(x_, y_, w, h);
-    fill(color(0)); // defaultna boja teksta 
+    fill(color(0)); // defaultna boja teksta
     textAlign(CENTER, CENTER);
     textSize(textSize);
     text(text, x_ + w / 2, y_ + h / 2);
@@ -82,24 +80,24 @@ class Gumb {
     yPom = y_;
     sivi = 0;
   }
-  
+
   // Crtaj sa zadanom bojom
-  void nacrtajGumb(color boja){
-    fill(boja); 
+  void nacrtajGumb(color boja) {
+    fill(boja);
     rect(x, y, w, h);
-    fill(color(0)); // defaultna boja teksta 
+    fill(color(0)); // defaultna boja teksta
     textAlign(CENTER, CENTER);
     textSize(textSize);
     text(text, x + w / 2, y + h / 2);
     pomaknut = 0;
     sivi = 1;
   }
-  
+
   //detektira je li mis unutar gumba
-  boolean unutar(){
-    if(sivi == 1)
+  boolean unutar() {
+    if (sivi == 1)
       return false;
-    if(pomaknut == 0){
+    if (pomaknut == 0) {
       if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
         return true;
       else
@@ -111,11 +109,9 @@ class Gumb {
         return false;
     }
   }
-  
-  void prikaziSliku(String slika){
-    //fill(rectColor); 
-    //rect(x, y, w, h);
-    // potencijalno maskirat.. 
-    image(loadImage(slika), x, y, w, h); //  + ".png" dat (pozeljne/skalirane) dimenzije slike td se ne izoblici
+
+  void prikaziSliku(String slika) { //npr candy.png, pozvat gumb.prikaziSliku("candy.png")
+    // potencijalno maskirat..
+    image(loadImage(slika), x, y, w, h); // po mogucnosti dodat dimenzije slike td se ne izoblici
   }
 }

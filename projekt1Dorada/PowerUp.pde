@@ -1,10 +1,10 @@
-
+// klasa za loptice koje daju benefite ili kazne
 class PowerUp extends Loptica {
-  String ime; // tako da ne treba globalna vrijednost imena dodijeljenogPoweUpa
+  String ime; // tako da ne treba globalna vrijednost imena dodijeljenogPowerUpa
   float a;
 
   PowerUp(float x_, float y_, float brzinax_, float brzinay_, float radius_, color boja_, String ime_) {
-
+    // pozovi konstruktor klase Loptica
     super(x_, y_, brzinax_, brzinay_, radius_, boja_);
     ime = ime_;
     a = 0.0;
@@ -20,6 +20,7 @@ class PowerUp extends Loptica {
     }
     x = x  + sin(a);
   }
+  
   void unistiAkoPresaoScreen() {
     if (y >= height) {
       removePowerUp();
@@ -29,14 +30,14 @@ class PowerUp extends Loptica {
 
 PowerUp napraviPowerUp(color boja, String ime)
 {
-  int x, y, brzinay;
+  float x, y, brzinay;
   do
   {
-    x = (int) random(10, width-10);
-    y = (int) random(-5, 0);
+    x = random((radijus/2), width-(radijus/2) );
+    y = random( 50 + (radijus/2), height-(radijus/2) );
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
-  brzinay = (int) random(1.5, 6);
+  brzinay = random(0.6, 5);
   return new PowerUp(x, y, 0, brzinay, radijus, boja, ime); // defaultno plava
 }
 
@@ -44,7 +45,7 @@ void dodajPowerUp() {
 
   if (rezultat > 0 && vrijeme() && powerUpCount == 0 && collisionCooldown <=0) {
     powerUpCount = 1;
-    
+
     float random = random(1, 11);
     if (random < 4) {
       dodijeljenPowerUp = negativniPowerUp[ int(random(negativniPowerUp.length)) ];
@@ -53,7 +54,7 @@ void dodajPowerUp() {
       dodijeljenPowerUp = pozitivniPowerUp[ int(random(pozitivniPowerUp.length)) ];
       powerUp = napraviPowerUp(yellow, dodijeljenPowerUp);
     }
-  } 
+  }
 }
 
 boolean vrijeme() {
@@ -155,7 +156,6 @@ void smanjiPlaveLoptice() {
     int index = odabraneLoptice[i];
 
     if (protiv[index] != null) {
-      //protiv[index].updateRadius(protiv[index].radius - 20); // drektno promijenit radius ILI
       protiv[index].updateRadius(radijusPowerUp);
       radijusPowerUp /= 1.2;
     }

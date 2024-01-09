@@ -4,7 +4,7 @@ int collisionCooldown = 0;
 int collisionCooldownAllGreen = 0;
 int radijus = 50;
 int radijusPowerUp = 55;
-int rezultat; // unedno i counter za broj protivnika
+int rezultat; // ujedno i counter za broj protivnika
 int dodatniBodovi = 0;
 boolean odabranaPrvaIgra;
 boolean kraj;
@@ -15,7 +15,7 @@ int trenutnoVrijeme, minute, sekunde, prosloVrijeme;
 color blue = color(0, 0, 255), green = color(0, 255, 0), red = color(255, 0, 0), purple = color(128, 0, 128), yellow = color(255, 255, 0);
 int powerUpCount = 0;
 PowerUp powerUp;
-int startAllGreen; // za mjerenje vremena 
+int startAllGreen; // za mjerenje vremena
 String[] pozitivniPowerUp = {"addExtraLife", "allGreen", "ExtraPoints", "slowDownBlueOnes", "fewSmallBlue"}; // two green, few powerUps at the same time
 String[] negativniPowerUp = {"speedUpBlueOnes", "fewBigBlue"}; // negative points, green missing(out of screen) for short period(mean),
 String dodijeljenPowerUp;
@@ -26,10 +26,11 @@ int trenutnoVrijemeDoPU;
 int startShake = 0;
 int trenutniShake = 0;
 
+// pomocna funkcija za pravilan ispis rijeci bod/boda/bodova
 String deklinacija(int ukupniRezultat) {
   String bodova = " bodova";
-  if( ukupniRezultat%10 < 5 && ukupniRezultat/10 != 1 && ukupniRezultat%10 > 0){
-    if(ukupniRezultat == 1 || ukupniRezultat%10 == 1 ){
+  if ( ukupniRezultat%10 < 5 && ukupniRezultat/10 != 1 && ukupniRezultat%10 > 0) {
+    if (ukupniRezultat == 1 || ukupniRezultat%10 == 1 ) {
       bodova = " bod.";
     } else {
       bodova = " boda.";
@@ -54,7 +55,7 @@ void prijavaPrvaIgra() {
     Text duljinaUsername = new Text(350, 450, 30, "Ime smije sadržavati najviše 14 znakova!", crvena);
     duljinaUsername.ispisiText();
   }
-  
+
   postavke.nacrtajGumb();
 }
 
@@ -86,11 +87,11 @@ void prikaziPrvuIgru() {
 
     Text zivoti = new Text(width - 120, 40, 30, "Broj života: " + brojZivota, bijela);
     zivoti.ispisiText();
-    
-    // ispis vremena igranja igrice    
+
+    // ispis vremena igranja igrice
     trenutnoVrijeme = millis() - vrijemePocetka;
     trajanjeIgre = trenutnoVrijeme + prosloVrijeme;
-    
+
     Text vrijeme = new Text( width/2, 20, 30, pretvoriVrijeme(trajanjeIgre), bijela);
     vrijeme.ispisiText();
 
@@ -103,11 +104,11 @@ void prikaziPrvuIgru() {
         if (allGreen) {
           trenutniAllGreen = millis();
           promijeniUBoju(green);
-          if(collisionCooldownAllGreen <= 0){
+          if (collisionCooldownAllGreen <= 0) {
             if (trenutniAllGreen - startAllGreen <= 3000) {
               dodatniBodovi++;
             } else {
-              allGreen = false; 
+              allGreen = false;
               promijeniUBoju(blue);
               delay(500);
             }
@@ -129,7 +130,6 @@ void prikaziPrvuIgru() {
           collisionCooldown = 20;
         }
         collisionCooldownAllGreen = 15;
-
       }
     }
 
@@ -163,7 +163,7 @@ void prikaziKrajPrveIgre() {
   background(pozadina);
 
   int ukupniRezultat = rezultat + dodatniBodovi;
-  
+
   Text rez = new Text(350, 100, 60, "Skupili ste " + ukupniRezultat + deklinacija(ukupniRezultat), zuta);
   rez.ispisiText();
 
