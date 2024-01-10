@@ -43,12 +43,6 @@ class Loptica
     this.y = y;
   }
 
-  // za shake loptice (ako uspije)
-  void pomakniKoordinateZa(float x_, float y_) {
-    x += x_;
-    y += y_;
-  }
-
   void updateRadius(float r) {
     if ( r >= 20 || r <= 150 ) {
       radius = r;
@@ -107,4 +101,29 @@ Loptica napraviLopticuBoje(color boja)
   brzinax = random(0.6, 5);
   brzinay = random(0.6, 5);
   return new Loptica(x, y, brzinax, brzinay, radijus, boja);
+}
+
+void crtajLoptice() { // crtanje loptica odvojeno od detekcije kolizije s lopticama
+
+  //crvena loptica koja je uvijek tamo gdje je miš
+  dohvati.shakeIfActive();
+
+  //zelena loptica koju trebamo uhvatiti
+  fill(dohvati.boja);
+  ellipse(dohvati.x, dohvati.y, dohvati.radius, dohvati.radius);
+
+  dohvati.update();
+
+  //plave loptice koje ne smijemo udariti
+  for (int i = 0; i<rezultat +1; i++)
+  {
+    protiv[i].update();
+    fill(protiv[i].boja);
+    ellipse(protiv[i].x, protiv[i].y, protiv[i].radius, protiv[i].radius);
+  }
+
+  // powerUps
+  trenutnoVrijemeDoPU = millis();
+  dodajPowerUp();
+  prikaziPowerUp();
 }

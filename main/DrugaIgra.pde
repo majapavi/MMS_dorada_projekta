@@ -209,3 +209,16 @@ void dodir() {
     }
   }
 }
+
+//ispisivanje trenutnog rezultata na vrhu ekrana
+void ispisiRezultat() {
+  textSize(30);
+  fill(zuta);
+  textAlign(LEFT);
+  text(igrac1, 20, 50);
+  text(bodovi1, 20, 80);
+  fill(bijela);
+  textAlign(RIGHT);
+  text(igrac2, width-20, 50);
+  text(bodovi2, width-20, 80);
+}

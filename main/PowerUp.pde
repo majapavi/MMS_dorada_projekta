@@ -34,7 +34,7 @@ PowerUp napraviPowerUp(color boja, String ime)
   do
   {
     x = random((radijus/2), width-(radijus/2) );
-    y = random( 50 + (radijus/2), height-(radijus/2) );
+    y = random(-5,0);
   }
   while (dist(mouseX, mouseY, x, y) < radijus*2 + 50);
   brzinay = random(0.6, 5);

@@ -52,3 +52,16 @@ String pretvoriVrijeme(int t) {
 
   return vrijeme;
 }
+
+// pomocna funkcija za pravilan ispis rijeci bod/boda/bodova
+String deklinacija(int ukupniRezultat) {
+  String bodova = " bodova";
+  if ( ukupniRezultat%10 < 5 && ukupniRezultat/10 != 1 && ukupniRezultat%10 > 0) {
+    if (ukupniRezultat == 1 || ukupniRezultat%10 == 1 ) {
+      bodova = " bod";
+    } else {
+      bodova = " boda";
+    }
+  }
+  return bodova;
+}
